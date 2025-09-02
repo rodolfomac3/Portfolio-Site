@@ -1,7 +1,8 @@
 {
+  "version": 2,
   "rewrites": [
-    { "source": "/marker/(.*)", "destination": "https://<your-marker-host>.onrender.com/$1" },
-    { "source": "/api/marker/(.*)", "destination": "https://<your-marker-host>.onrender.com/$1" },
-    { "source": "/marker", "destination": "https://<your-marker-host>.onrender.com/" }
+    { "source": "/marker", "destination": "https://markerfinder.onrender.com/" },
+    { "source": "/marker/(.*)", "destination": "https://markerfinder.onrender.com/$1" },
+    { "source": "/api/marker/(.*)", "destination": "https://markerfinder.onrender.com/$1" }
   ]
 }
