@@ -3,7 +3,10 @@
   "rewrites": [
     { "source": "/marker", "destination": "https://markerfinder.onrender.com/" },
     { "source": "/marker/(.*)", "destination": "https://markerfinder.onrender.com/$1" },
-    { "source": "/wizard", "destination": "https://markerfinder.onrender.com/wizard" },
+
+    { "source": "/designer", "destination": "https://markerfinder.onrender.com/designer" },
+    { "source": "/designer/(.*)", "destination": "https://markerfinder.onrender.com/designer/$1" },
+
     { "source": "/api/(.*)", "destination": "https://markerfinder.onrender.com/api/$1" },
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
     { "source": "/health", "destination": "https://markerfinder.onrender.com/health" }
