@@ -3,8 +3,6 @@
   "rewrites": [
     { "source": "/marker", "destination": "https://markerfinder.onrender.com/" },
     { "source": "/marker/(.*)", "destination": "https://markerfinder.onrender.com/$1" },
-
-    // Catch app links that are absolute (no /marker prefix)
     { "source": "/wizard", "destination": "https://markerfinder.onrender.com/wizard" },
     { "source": "/api/(.*)", "destination": "https://markerfinder.onrender.com/api/$1" },
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
