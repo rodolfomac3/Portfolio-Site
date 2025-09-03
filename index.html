@@ -105,11 +105,10 @@
   </section>
 
   <!-- Projects -->
-  <section id="projects" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800">
+  <section id="projects" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800" x-data="{ showAll: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-end justify-between mb-8">
         <h2 class="text-2xl sm:text-3xl font-bold">Projects</h2>
-        <a href="#" class="text-brand-600 hover:text-brand-700 text-sm">See all →</a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -125,7 +124,6 @@
               <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
               <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Primer3</span>
               <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">NCBI</span>
-              <span id="markerStatus" class="hidden ml-auto px-2 py-0.5 text-xs rounded-full"></span>
             </div>
             <h3 class="font-semibold text-xl">Marker Finder</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Primer design wizard with QC badges, conservation plots, and NCBI-powered search. CSV/PDF export.</p>
@@ -160,7 +158,10 @@
             </div>
           </div>
         </article>
+      </div>
 
+      <!-- Hidden Projects -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8" x-show="showAll" x-transition>
         <!-- TickID -->
         <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
           <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
@@ -173,11 +174,6 @@
             </div>
             <h3 class="font-semibold text-xl">TickID</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Image-based tick identification with model explainability and field notes export.</p>
-            <div class="mt-5">
-              <a href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
-              </a>
-            </div>
           </div>
         </article>
 
@@ -193,11 +189,6 @@
             </div>
             <h3 class="font-semibold text-xl">Pathogen Ecology Simulator</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Agent-based simulations exploring host–pathogen dynamics across climates and habitats.</p>
-            <div class="mt-5">
-              <a href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                <i data-lucide="file-text" class="w-4 h-4"></i> Read summary
-              </a>
-            </div>
           </div>
         </article>
 
@@ -213,13 +204,16 @@
             </div>
             <h3 class="font-semibold text-xl">Paper: Host–Pathogen Interactions</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Bench-to-field study linking molecular markers with ecological outcomes.</p>
-            <div class="mt-5">
-              <a href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                <i data-lucide="book-open" class="w-4 h-4"></i> View paper
-              </a>
-            </div>
           </div>
         </article>
+      </div>
+
+      <!-- Toggle button -->
+      <div class="mt-8 text-center">
+        <button @click="showAll = !showAll"
+          class="px-5 py-2.5 rounded-xl bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition">
+          <span x-text="showAll ? 'Show less ←' : 'See all projects →'"></span>
+        </button>
       </div>
     </div>
   </section>
