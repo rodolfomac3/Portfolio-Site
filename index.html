@@ -238,52 +238,70 @@
   </section>
 
   <!-- Skills -->
-  <!-- Skills -->
 <section id="skills" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-center">Skills</h2>
-    
-    <div class="space-y-4">
-      <!-- Lab Skills -->
-      <div x-data="{ open: false }" class="border rounded-2xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-soft">
-        <button @click="open = !open" class="w-full flex justify-between items-center px-5 py-4 text-left font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-2xl transition">
-          <span>Lab Skills</span>
-          <i :data-lucide="open ? 'chevron-up' : 'chevron-down'" class="w-5 h-5"></i>
+
+    <div x-data="{ tab: 'lab' }">
+      <!-- Tabs -->
+      <div class="flex justify-center gap-6 mb-6">
+        <button @click="tab = 'lab'" 
+          :class="tab==='lab' ? 'bg-brand-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
+          class="px-5 py-2 rounded-xl font-medium transition">
+          Lab Skills
         </button>
-        <div x-show="open" x-collapse class="px-5 pb-5 text-sm text-slate-600 dark:text-slate-300">
-          Aseptic technique (BSL-2), GMP-aligned workflows, PCR/qPCR, ELISA, flow cytometry, 
-          HPLC/FPLC, microscopy, sample purification, media/reagent prep, equipment calibration.
-        </div>
+        <button @click="tab = 'analytical'" 
+          :class="tab==='analytical' ? 'bg-brand-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
+          class="px-5 py-2 rounded-xl font-medium transition">
+          Analytical Skills
+        </button>
+        <button @click="tab = 'professional'" 
+          :class="tab==='professional' ? 'bg-brand-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
+          class="px-5 py-2 rounded-xl font-medium transition">
+          Professional Skills
+        </button>
       </div>
 
-      <!-- Analytical Skills -->
-      <div x-data="{ open: false }" class="border rounded-2xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-soft">
-        <button @click="open = !open" class="w-full flex justify-between items-center px-5 py-4 text-left font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-2xl transition">
-          <span>Analytical Skills</span>
-          <i :data-lucide="open ? 'chevron-up' : 'chevron-down'" class="w-5 h-5"></i>
-        </button>
-        <div x-show="open" x-collapse class="px-5 pb-5 text-sm text-slate-600 dark:text-slate-300">
-          Data visualization (R, Python), reproducible pipelines, GLP/cGMP documentation, 
-          modeling (ODEs, ecological dynamics), bioinformatics (Primer3, Biopython), 
-          database integration.
+      <!-- Panels -->
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-soft p-6">
+        <!-- Lab Skills -->
+        <div x-show="tab === 'lab'" class="grid sm:grid-cols-2 gap-3 text-sm text-slate-700 dark:text-slate-300">
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Aseptic technique (BSL-2)</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">GMP-aligned workflows</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">PCR/qPCR</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">ELISA</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Flow cytometry</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">HPLC/FPLC</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Microscopy</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Sample purification</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Media/reagent prep</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Equipment calibration</span>
         </div>
-      </div>
 
-      <!-- Professional Skills -->
-      <div x-data="{ open: false }" class="border rounded-2xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-soft">
-        <button @click="open = !open" class="w-full flex justify-between items-center px-5 py-4 text-left font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-2xl transition">
-          <span>Professional Skills</span>
-          <i :data-lucide="open ? 'chevron-up' : 'chevron-down'" class="w-5 h-5"></i>
-        </button>
-        <div x-show="open" x-collapse class="px-5 pb-5 text-sm text-slate-600 dark:text-slate-300">
-          Bilingual (English/Spanish), highly collaborative, detail-oriented, 
-          clear scientific communication, protocol-driven teamwork, 
-          problem-solving under regulated lab conditions.
+        <!-- Analytical Skills -->
+        <div x-show="tab === 'analytical'" class="grid sm:grid-cols-2 gap-3 text-sm text-slate-700 dark:text-slate-300">
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Data visualization (R, Python)</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Reproducible pipelines</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">GLP/cGMP documentation</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">ODE/ecological modeling</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Bioinformatics (Primer3, Biopython)</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Database integration</span>
+        </div>
+
+        <!-- Professional Skills -->
+        <div x-show="tab === 'professional'" class="grid sm:grid-cols-2 gap-3 text-sm text-slate-700 dark:text-slate-300">
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Bilingual (English/Spanish)</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Highly collaborative</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Detail-oriented</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Clear scientific communication</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Protocol-driven teamwork</span>
+          <span class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Problem-solving under regulated lab conditions</span>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 
 
   <!-- Contact -->
