@@ -85,7 +85,7 @@
   <section id="home" class="relative overflow-hidden">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center">
       <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
-        I am a Molecular Biologist who <span class="bg-gradient-to-r from-brand-500 to-sky-400 bg-clip-text text-transparent"> creates useful science software</span> and powerful web apps for Lab work/research.
+        I am a Molecular Biologist with lab experience who <span class="bg-gradient-to-r from-brand-500 to-sky-400 bg-clip-text text-transparent"> creates useful science software</span> and powerful web apps for Lab work/research.
       </h1>
       <p class="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
         Molecular biologist + full-stack engineer. A single place for my: interactive tools, case studies, and research.
@@ -310,12 +310,8 @@
         // Make sure your PDF sits at the site root alongside this HTML file
         // (or update the path to wherever your host serves static files)
         resumeUrl: '/_Resume.pdf',
-        mailto: 'mailto:you@domain.com',
-        links: {
-          github: 'https://github.com/rodolfomac3',
-          linkedin: 'https://www.linkedin.com/in/youruser/',
-          googleScholar: '#'
-        },
+        mailto: 'mailto:you@domain.com'
+        
         init(){
           const pref = localStorage.getItem('dm');
           this.darkMode = pref ? pref === '1' : window.matchMedia('(prefers-color-scheme: dark)').matches;
