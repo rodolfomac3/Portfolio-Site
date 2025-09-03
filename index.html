@@ -237,14 +237,14 @@
     </div>
   </section>
 
-  <!-- Skills -->
+ <!-- Skills -->
 <section id="skills" class="py-20 border-t border-slate-200/70 dark:border-slate-800">
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center">Skills</h2>
+    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">Skills</h2>
 
     <div x-data="{ tab: 'lab' }">
       <!-- Tabs -->
-      <div class="flex justify-center gap-6 mb-10">
+      <div class="flex justify-center gap-6 mb-10 flex-wrap">
         <button @click="tab = 'lab'" 
           :class="tab==='lab' ? 'bg-brand-600 text-white shadow-soft' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
           class="px-6 py-3 rounded-xl font-semibold transition text-lg">
@@ -264,44 +264,64 @@
 
       <!-- Panels -->
       <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-soft p-10">
+        
         <!-- Lab Skills -->
-        <div x-show="tab === 'lab'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-base text-slate-700 dark:text-slate-300">
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Aseptic technique (BSL-2)</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">GMP-aligned workflows</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">PCR/qPCR</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">ELISA</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Flow cytometry</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">HPLC/FPLC</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Microscopy</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Sample purification</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Media/reagent prep</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Equipment calibration</span>
+        <div x-show="tab === 'lab'" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-base text-slate-700 dark:text-slate-300">
+          <span class="skill-pill">Aseptic techniques (BSL-2)</span>
+          <span class="skill-pill">Mammalian & microbial cell culture</span>
+          <span class="skill-pill">PCR / qPCR / ddPCR</span>
+          <span class="skill-pill">ELISA, Western blot, immunofluorescence</span>
+          <span class="skill-pill">Flow cytometry</span>
+          <span class="skill-pill">Microscopy (brightfield, fluorescence)</span>
+          <span class="skill-pill">HPLC / FPLC</span>
+          <span class="skill-pill">Sample purification & extraction</span>
+          <span class="skill-pill">Media & reagent preparation</span>
+          <span class="skill-pill">Autoclave operation</span>
+          <span class="skill-pill">Equipment calibration (cGMP)</span>
+          <span class="skill-pill">Cleanroom / GMP workflows</span>
         </div>
 
         <!-- Analytical Skills -->
-        <div x-show="tab === 'analytical'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-base text-slate-700 dark:text-slate-300">
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Data visualization (R, Python)</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Reproducible pipelines</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">GLP/cGMP documentation</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">ODE/ecological modeling</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Bioinformatics (Primer3, Biopython)</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Database integration</span>
+        <div x-show="tab === 'analytical'" x-cloak class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-base text-slate-700 dark:text-slate-300">
+          <span class="skill-pill">Data visualization (R, Python)</span>
+          <span class="skill-pill">Statistical analysis (ANOVA, regression, nonparametric)</span>
+          <span class="skill-pill">Ecological & epidemiological modeling (ODEs, agent-based)</span>
+          <span class="skill-pill">Bioinformatics pipelines (Primer3, Biopython, BLAST)</span>
+          <span class="skill-pill">Genomic data handling (FASTA/FASTQ, NCBI/ENSEMBL)</span>
+          <span class="skill-pill">Workflow reproducibility (GitHub, documentation)</span>
+          <span class="skill-pill">Database integration (SQL, SQLite, MongoDB)</span>
+          <span class="skill-pill">LIMS / sample tracking</span>
+          <span class="skill-pill">GLP / cGMP record-keeping</span>
+          <span class="skill-pill">Cloud platforms (AWS, Render, Vercel)</span>
         </div>
 
         <!-- Professional Skills -->
-        <div x-show="tab === 'professional'" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-base text-slate-700 dark:text-slate-300">
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Bilingual (English/Spanish)</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Highly collaborative</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Detail-oriented</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Clear scientific communication</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Protocol-driven teamwork</span>
-          <span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Problem-solving under regulated lab conditions</span>
+        <div x-show="tab === 'professional'" x-cloak class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-base text-slate-700 dark:text-slate-300">
+          <span class="skill-pill">Bilingual (English/Spanish)</span>
+          <span class="skill-pill">Protocol design & optimization</span>
+          <span class="skill-pill">Scientific writing (NIH-style proposals, manuscripts)</span>
+          <span class="skill-pill">Clear presentation (posters, talks, dashboards)</span>
+          <span class="skill-pill">Collaboration across cross-disciplinary teams</span>
+          <span class="skill-pill">Project management (Agile, Trello, GitHub Projects)</span>
+          <span class="skill-pill">Problem-solving under regulated lab conditions</span>
+          <span class="skill-pill">UX-focused scientific software design</span>
+          <span class="skill-pill">Full-stack web development (Python, Flask, React, Tailwind, SQLite)</span>
+          <span class="skill-pill">API integration & microservices</span>
+          <span class="skill-pill">Deployment, testing, CI pipelines</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Skill pill styling -->
+<style>
+  .skill-pill {
+    @apply px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 
+           hover:bg-brand-100 dark:hover:bg-brand-900 
+           transition cursor-default shadow-sm;
+  }
+</style>
 
 
   <!-- Contact -->
@@ -312,7 +332,6 @@
       <div class="mt-6 flex justify-center">
         <a :href="mailto" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 text-white hover:bg-brand-700"><i data-lucide="mail" class="w-5 h-5"></i> Email</a>
       </div>
-      <p class="mt-6 text-xs text-slate-500 dark:text-slate-400">For research/demo use only. No medical advice.</p>
     </div>
   </section>
 
