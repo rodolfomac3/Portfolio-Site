@@ -137,10 +137,12 @@
           </div>
         </article>
 
-        <!-- Lab Inventory -->
+        <!-- Lab Inventory (video added) -->
         <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
-          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-            <span class="text-slate-400">Screenshot / GIF</span>
+          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+              <source src="/labinventory.mp4" type="video/mp4" />
+            </video>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-3">
@@ -305,10 +307,14 @@
         darkMode: false,
         mobileOpen: false,
         year: new Date().getFullYear(),
-        resumeUrl: '/_Resume.pdf', // replace with /resume.pdf
+        // Make sure your PDF sits at the site root alongside this HTML file
+        // (or update the path to wherever your host serves static files)
+        resumeUrl: '/_Resume.pdf',
         mailto: 'mailto:you@domain.com',
         links: {
-          github: 'https://github.com/rodolfomac3'
+          github: 'https://github.com/rodolfomac3',
+          linkedin: 'https://www.linkedin.com/in/youruser/',
+          googleScholar: '#'
         },
         init(){
           const pref = localStorage.getItem('dm');
@@ -316,9 +322,10 @@
           this.applyDark();
           (window.lucide && window.lucide.createIcons && window.lucide.createIcons());
 
-          // Health badge for Marker Finder
+          // Health badge for Marker Finder (optional; keep hidden if it fails)
           (async () => {
             const el = document.getElementById("markerStatus");
+            if (!el) return;
             try {
               const r = await fetch("/marker/health", { cache: "no-store" });
               const j = await r.json();
@@ -330,7 +337,8 @@
           })();
         },
         toggleDark(){
-          this.darkMode = !this.darkMode; this.applyDark();
+          this.darkMode = !this.darkMode;
+          this.applyDark();
           localStorage.setItem('dm', this.darkMode ? '1' : '0');
           (window.lucide && window.lucide.createIcons && window.lucide.createIcons());
         },
