@@ -150,6 +150,34 @@
           </div>
         </article>
 
+        <!-- Lab Inventory (NEW) -->
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+            <span class="text-slate-400">Screenshot / GIF</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">SQLite</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Tailwind</span>
+            </div>
+            <h3 class="font-semibold text-xl">Lab Inventory</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">
+              Inventory management for research labs: items, attachments, reorder queue, analytics.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <a href="https://lab-inventory-6l9o.onrender.com/" target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
+              </a>
+              <a href="https://github.com/rodolfomac3/Lab-Inventory" target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg hover:underline">
+                <i data-lucide="github" class="w-4 h-4"></i> Source
+              </a>
+            </div>
+          </div>
+        </article>
+
         <!-- TickID -->
         <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
           <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
@@ -309,7 +337,7 @@
           this.applyDark();
           (window.lucide && window.lucide.createIcons && window.lucide.createIcons());
 
-          // Health badge: show "Online" only when healthy; otherwise stay hidden
+          // Health badge for Marker Finder
           (async () => {
             const el = document.getElementById("markerStatus");
             try {
