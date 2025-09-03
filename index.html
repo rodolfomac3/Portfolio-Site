@@ -105,7 +105,124 @@
   </section>
 
   <!-- Projects -->
-  <!-- (Keeping your project cards the same, no edits here) -->
+  <section id="projects" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-end justify-between mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold">Projects</h2>
+        <a href="#" class="text-brand-600 hover:text-brand-700 text-sm">See all →</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Marker Finder -->
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+              <source src="/marker_demo1.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Primer3</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">NCBI</span>
+              <span id="markerStatus" class="hidden ml-auto px-2 py-0.5 text-xs rounded-full"></span>
+            </div>
+            <h3 class="font-semibold text-xl">Marker Finder</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Primer design wizard with QC badges, conservation plots, and NCBI-powered search. CSV/PDF export.</p>
+            <div class="mt-5">
+              <a href="/marker" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lab Inventory -->
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+              <source src="/labinventory.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">SQLite</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Tailwind</span>
+            </div>
+            <h3 class="font-semibold text-xl">Lab Inventory</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Inventory management for research labs: items, attachments, reorder queue, analytics.</p>
+            <div class="mt-5">
+              <a href="https://lab-inventory-6l9o.onrender.com/" target="_blank" rel="noopener"
+                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- TickID -->
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+          <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+            <span class="text-slate-400">Screenshot / GIF</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Computer Vision</span>
+            </div>
+            <h3 class="font-semibold text-xl">TickID</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Image-based tick identification with model explainability and field notes export.</p>
+            <div class="mt-5">
+              <a href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pathogen Ecology Simulator -->
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+          <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+            <span class="text-slate-400">Figure / Diagram</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Ecology</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Modeling</span>
+            </div>
+            <h3 class="font-semibold text-xl">Pathogen Ecology Simulator</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Agent-based simulations exploring host–pathogen dynamics across climates and habitats.</p>
+            <div class="mt-5">
+              <a href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i data-lucide="file-text" class="w-4 h-4"></i> Read summary
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Paper -->
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+          <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+            <span class="text-slate-400">Paper cover / Figure</span>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Manuscript</span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Host–Pathogen</span>
+            </div>
+            <h3 class="font-semibold text-xl">Paper: Host–Pathogen Interactions</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Bench-to-field study linking molecular markers with ecological outcomes.</p>
+            <div class="mt-5">
+              <a href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                <i data-lucide="book-open" class="w-4 h-4"></i> View paper
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
   <!-- About -->
   <section id="about" class="py-14 lg:py-20">
