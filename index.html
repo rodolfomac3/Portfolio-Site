@@ -98,8 +98,6 @@
           <i data-lucide="file-text" class="w-5 h-5"></i> Download Resume
         </a>
       </div>
-      <div class="mt-8 flex justify-center gap-6 text-slate-500 dark:text-slate-400">
-      </div>
     </div>
   </section>
 
@@ -111,7 +109,7 @@
   </div>
 
   <!-- Projects -->
-  <section id="projects" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800" x-data="{ showAll: false }">
+  <section id="projects" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-end justify-between mb-8">
         <h2 class="text-2xl sm:text-3xl font-bold">Projects</h2>
@@ -119,7 +117,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Marker Finder -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900" x-data="{ open: false }">
           <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
             <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
               <source src="/marker_demo1.mp4" type="video/mp4" />
@@ -133,20 +131,32 @@
             </div>
             <h3 class="font-semibold text-xl">Marker Finder</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Primer design wizard with QC badges, conservation plots, and NCBI-powered search. CSV/PDF export.</p>
-            <!-- Why it matters -->
-            <div class="mt-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
-              <strong>Why it matters:</strong> Designing reliable primers is one of the most critical yet time-consuming steps in molecular biology. A poorly chosen primer set can waste days of work, valuable reagents, and entire experiments. Marker Finder streamlines this process by integrating primer design, conservation analysis, and NCBI-powered validation into a single tool. By giving users immediate quality checks and exportable results, it reduces the risk of experimental failure and helps researchers move from concept to data generation more efficiently. This matters because in both academic and applied labs, time saved at the design stage often translates directly into faster discoveries and reduced costs.
-            </div>
             <div class="mt-5">
-              <a href="/marker" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
-              </a>
+              <div class="flex gap-3">
+                <a href="/marker" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                  <i data-lucide="external-link" class="w-4 h-4"></i> Open app
+                </a>
+                <button @click="open = !open" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-700">
+                  <i data-lucide="info" class="w-4 h-4"></i> Why This Matters
+                </button>
+              </div>
+              <div x-show="open" x-transition class="mt-4 p-5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
+                <p class="mb-3">
+                  Designing reliable primers is one of the most critical yet time-consuming steps in molecular biology. A poorly chosen primer set can waste days of work, valuable reagents, and entire experiments.
+                </p>
+                <p class="mb-3">
+                  <strong>Marker Finder</strong> streamlines this process by integrating primer design, conservation analysis, and NCBI-powered validation into a single tool. By giving users immediate quality checks and exportable results, it reduces the risk of experimental failure and helps researchers move from concept to data generation more efficiently.
+                </p>
+                <p>
+                  In both academic and applied labs, time saved at the design stage often translates directly into faster discoveries and reduced costs, making this tool a practical bridge between concept and result. (Under-Construction)
+                </p>
+              </div>
             </div>
           </div>
         </article>
 
         <!-- Lab Inventory -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
+        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900" x-data="{ open: false }">
           <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
             <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
               <source src="/labinventory.mp4" type="video/mp4" />
@@ -160,15 +170,26 @@
             </div>
             <h3 class="font-semibold text-xl">Lab Inventory</h3>
             <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Inventory management for research labs: items, attachments, reorder queue, analytics.</p>
-            <!-- Why it matters -->
-            <div class="mt-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
-              <strong>Why it matters:</strong> Every lab depends on careful reagent management to ensure experiments are reproducible and compliant with quality standards. Mismanaged inventories can lead to expired reagents, interrupted workflows, and even compliance risks in regulated environments. The Lab Inventory app models real-world laboratory logistics by tracking items, usage, and reorders in a structured system. For a new graduate or early-career researcher, building such a tool demonstrates not only technical skills but also an understanding of the daily operational challenges scientists face. In practice, this type of system ensures experiments aren’t derailed by missing supplies and helps labs align with GMP expectations — both of which are critical for serious, professional research environments.
-            </div>
             <div class="mt-5">
-              <a href="https://lab-inventory-6l9o.onrender.com/" target="_blank" rel="noopener"
-                 class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                <i data-lucide="external-link" class="w-4 h-4"></i> Open app
-              </a>
+              <div class="flex gap-3">
+                <a href="https://lab-inventory-6l9o.onrender.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                  <i data-lucide="external-link" class="w-4 h-4"></i> Open app
+                </a>
+                <button @click="open = !open" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-700">
+                  <i data-lucide="info" class="w-4 h-4"></i> Why This Matters
+                </button>
+              </div>
+              <div x-show="open" x-transition class="mt-4 p-5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
+                <p class="mb-3">
+                  Every lab depends on careful reagent management to ensure experiments are reproducible and compliant with quality standards. Mismanaged inventories can lead to expired reagents, interrupted workflows, and even compliance risks in regulated environments.
+                </p>
+                <p class="mb-3">
+                  The <strong>Lab Inventory</strong> app models real-world laboratory logistics by tracking items, usage, and reorders in a structured system. For a new graduate or early-career researcher, building such a tool demonstrates not only technical skills but also an understanding of the daily operational challenges scientists face.
+                </p>
+                <p>
+                  In practice, this type of system ensures experiments aren’t derailed by missing supplies and helps labs align with GMP expectations — both of which are critical for serious, professional research environments.
+                </p>
+              </div>
             </div>
           </div>
         </article>
@@ -388,7 +409,6 @@
            transition cursor-default shadow-sm;
   }
 </style>
-
 
   <!-- Contact -->
   <section id="contact" class="py-14 lg:py-20">
