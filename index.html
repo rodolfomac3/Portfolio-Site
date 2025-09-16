@@ -360,6 +360,56 @@
         </article>
 
         <!-- Additional Project Placeholder -->
+
+<!-- Lyme Disease Model -->
+<article class="card-hover rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden" x-data="{ open: false }">
+  <div class="aspect-[16/9] bg-gradient-to-br from-emerald-900/30 to-teal-900/30 flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10"></div>
+    <div class="text-center relative z-10">
+      <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/20">
+        <i data-lucide="activity" class="w-10 h-10 text-emerald-300"></i>
+      </div>
+      <p class="text-xl font-semibold text-white mb-2">Mathematical Disease Model</p>
+      <p class="text-sm text-emerald-300">ODE System & Parameter Analysis</p>
+    </div>
+  </div>
+  <div class="p-8">
+    <div class="flex items-center gap-2 mb-4 flex-wrap">
+      <span class="px-3 py-1 text-xs rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">R/deSolve</span>
+      <span class="px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">ODEs</span>
+      <span class="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">Epidemiology</span>
+      <span class="px-3 py-1 text-xs rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30">Policy Impact</span>
+    </div>
+    <h3 class="font-semibold text-2xl font-display mb-3">Lyme Disease Transmission Dynamics</h3>
+    <p class="text-primary-200 mb-6 leading-relaxed">
+      Comprehensive mathematical model using stage-structured ODEs to analyze white-footed mouse density effects on Lyme disease transmission. 
+      Features temperature-dependent parameters, real Montgomery County climate data, and quantitative policy recommendations.
+    </p>
+    <div class="flex gap-3 mb-4">
+      <a href="/lyme-model" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
+        <i data-lucide="file-text" class="w-4 h-4"></i> View Research
+      </a>
+      <button @click="open = !open" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-all">
+        <i data-lucide="info" class="w-4 h-4"></i> Model Details
+      </button>
+    </div>
+    <div x-show="open" x-transition class="p-6 rounded-xl bg-primary-800/50 border border-white/10 text-primary-200 text-sm leading-relaxed">
+      <p class="mb-3">
+        <strong class="text-white">Mathematical Framework:</strong> 9-equation ODE system modeling SIS mouse dynamics, 
+        stage-structured tick populations (larvae→nymphs→adults), and human infection accumulation with temperature-dependent parameters.
+      </p>
+      <p class="mb-3">
+        <strong class="text-white">Key Finding:</strong> Critical threshold at 15 mice/acre above which human infections increase exponentially. 
+        Model predicts 12,400 cumulative cases over 2 years at peak density (40 mice/acre).
+      </p>
+      <p>
+        <strong class="text-white">Research Impact:</strong> Provides quantitative evidence for ecological management strategies, 
+        demonstrating that reducing mouse density to 10-12 mice/acre could decrease human Lyme risk by 40-60%.
+      </p>
+    </div>
+  </div>
+</article>
+        
         <!-- Rickettsia Research Story -->
 <article class="card-hover rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden" x-data="{ open: false }">
   <div class="aspect-[16/9] bg-gradient-to-br from-red-900/30 to-blue-900/30 flex items-center justify-center relative overflow-hidden">
@@ -416,7 +466,10 @@
 </article>
       </div>
     </div>
+    
   </section>
+
+  
 
   <!-- About Section -->
   <section id="about" class="py-20 lg:py-32 bg-primary-900/30">

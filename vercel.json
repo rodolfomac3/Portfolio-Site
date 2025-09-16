@@ -10,7 +10,8 @@
     { "source": "/api/(.*)", "destination": "https://markerfinder.onrender.com/api/$1" },
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
     { "source": "/health", "destination": "https://markerfinder.onrender.com/health" },
-    { "source": "/research-story", "destination": "/research-story.html" }
+    { "source": "/research-story", "destination": "/research-story.html" },
+    { "source": "/lyme-model", "destination": "/lyme-model.html" }
   ],
   "redirects": [
     { "source": "/lab", "destination": "https://lab-inventory-6l9o.onrender.com/", "permanent": false },
