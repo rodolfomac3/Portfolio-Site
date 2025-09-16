@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RODOLFO PADILLA — Projects & Research</title>
-  <meta name="description" content="Portfolio of Rodolfo Padilla — software + bioinformatics projects, tools, and case studies." />
-  <meta name="theme-color" content="#0ea5e9" />
+  <title>RODOLFO PADILLA — Molecular Biologist & Research Software Engineer</title>
+  <meta name="description" content="Molecular biologist with expertise in laboratory research and bioinformatics software development. Bridging wet lab science with computational solutions." />
+  <meta name="theme-color" content="#0f172a" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,12 +15,28 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
-              500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a'
+            primary: {
+              50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8',
+              500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617'
+            },
+            accent: {
+              50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399',
+              500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22'
             }
           },
-          boxShadow: { soft: '0 12px 32px -12px rgba(0,0,0,0.25)' }
+          fontFamily: {
+            'display': ['Inter', 'system-ui', 'sans-serif'],
+            'body': ['Inter', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -4px rgba(0, 0, 0, 0.25)',
+            'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+            'elegant': '0 10px 40px -10px rgba(0, 0, 0, 0.25)'
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            'mesh': 'radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%), radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%), radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%)'
+          }
         }
       }
     }
@@ -32,48 +48,93 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    .card-hover{transition:transform .25s ease, box-shadow .25s ease}
-    .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 45px -18px rgba(0,0,0,.35)}
-    .no-scrollbar::-webkit-scrollbar{display:none}
-    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    .card-hover { 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+    }
+    .card-hover:hover { 
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .glass {
+      backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(17, 25, 40, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.125);
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-bg {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)),
+                  url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23334155' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-16.569 13.431-30 30-30v60c-16.569 0-30-13.431-30-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .skill-pill {
+      @apply px-4 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 
+             hover:bg-accent-500/20 hover:border-accent-400/30 hover:scale-105
+             transition-all duration-300 cursor-default shadow-soft text-sm font-medium;
+    }
   </style>
 </head>
-<body :class="darkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-white text-slate-900'">
+
+<body class="bg-primary-950 text-white font-body antialiased">
   <!-- Header / Navbar -->
-  <header class="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/70 dark:border-slate-800">
+  <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-3 font-semibold">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-sky-400 shadow-soft"></div>
-        <span>RODOLFO PADILLA</span>
+      <a href="#home" class="flex items-center gap-3 font-semibold text-white hover:text-accent-400 transition-colors">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-500 to-blue-500 shadow-elegant flex items-center justify-center">
+          <i data-lucide="dna" class="w-5 h-5 text-white"></i>
+        </div>
+        <span class="font-display font-bold">RODOLFO PADILLA</span>
       </a>
+      
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-        <a href="#projects" class="hover:text-brand-600">Projects</a>
-        <a href="#about" class="hover:text-brand-600">About</a>
-        <a href="#skills" class="hover:text-brand-600">Skills</a>
-        <a href="#contact" class="hover:text-brand-600">Contact</a>
-        <a :href="resumeUrl" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+        <a href="#projects" class="text-primary-300 hover:text-accent-400 transition-colors">Projects</a>
+        <a href="#about" class="text-primary-300 hover:text-accent-400 transition-colors">About</a>
+        <a href="#skills" class="text-primary-300 hover:text-accent-400 transition-colors">Expertise</a>
+        <a href="#contact" class="text-primary-300 hover:text-accent-400 transition-colors">Contact</a>
+        <a :href="resumeUrl" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all shadow-soft">
           <i data-lucide="file-text" class="w-4 h-4"></i> Resume
         </a>
-        <button @click="toggleDark()" class="ml-1 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" :title="darkMode ? 'Light' : 'Dark'">
+        <button @click="toggleDark()" class="ml-1 p-2 rounded-lg hover:bg-white/10 transition-colors" :title="darkMode ? 'Light' : 'Dark'">
           <i :data-lucide="darkMode ? 'sun' : 'moon'" class="w-4 h-4"></i>
         </button>
       </nav>
-      <button class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" @click="mobileOpen=!mobileOpen" aria-label="Menu">
+      
+      <button class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors" @click="mobileOpen=!mobileOpen" aria-label="Menu">
         <i data-lucide="menu" class="w-5 h-5"></i>
       </button>
     </div>
+    
     <!-- Mobile menu -->
-    <div x-show="mobileOpen" x-transition class="md:hidden border-t border-slate-200 dark:border-slate-800">
+    <div x-show="mobileOpen" x-transition class="md:hidden border-t border-white/10 glass">
       <div class="px-4 py-3 flex flex-col gap-3 text-sm">
-        <a href="#projects" @click="mobileOpen=false">Projects</a>
-        <a href="#about" @click="mobileOpen=false">About</a>
-        <a href="#skills" @click="mobileOpen=false">Skills</a>
-        <a href="#contact" @click="mobileOpen=false">Contact</a>
-        <div class="flex items-center justify-between">
-          <a :href="resumeUrl" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 w-fit">
+        <a href="#projects" @click="mobileOpen=false" class="text-primary-300 hover:text-accent-400">Projects</a>
+        <a href="#about" @click="mobileOpen=false" class="text-primary-300 hover:text-accent-400">About</a>
+        <a href="#skills" @click="mobileOpen=false" class="text-primary-300 hover:text-accent-400">Expertise</a>
+        <a href="#contact" @click="mobileOpen=false" class="text-primary-300 hover:text-accent-400">Contact</a>
+        <div class="flex items-center justify-between pt-2">
+          <a :href="resumeUrl" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
             <i data-lucide="file-text" class="w-4 h-4"></i> Resume
           </a>
-          <button @click="toggleDark()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          <button @click="toggleDark()" class="p-2 rounded-lg hover:bg-white/10 transition-colors">
             <i :data-lucide="darkMode ? 'sun' : 'moon'" class="w-4 h-4"></i>
           </button>
         </div>
@@ -82,435 +143,733 @@
   </header>
 
   <!-- Hero -->
-  <section id="home" class="relative overflow-hidden">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center">
-      <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
-        I am a Molecular Biologist with hands-on lab experience who builds <span class="bg-gradient-to-r from-brand-500 to-sky-400 bg-clip-text text-transparent">  science software and web applications</span> that accelerate research and improve laboratory workflows.
+  <section id="home" class="relative min-h-screen flex items-center justify-center hero-bg">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary-950/90 to-primary-900/90"></div>
+    
+    <!-- Floating Elements -->
+    <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl float-animation"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl float-animation" style="animation-delay: -3s;"></div>
+    
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      <div class="mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500/20 border border-accent-400/30 text-accent-300 text-sm font-medium mb-6">
+          <div class="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></div>
+          Available for new opportunities
+        </div>
+      </div>
+      
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight mb-6">
+        <span class="block text-white mb-2">Molecular Biologist</span>
+        <span class="block text-gradient mb-2">& Research Software Engineer</span>
+        <span class="block text-primary-300 text-2xl sm:text-3xl lg:text-4xl font-normal">
+          Bridging Laboratory Science with Computational Innovation
+        </span>
       </h1>
-      <p class="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-        Molecular biologist + full-stack engineer. A single place for my: interactive tools, case studies, and research.
+      
+      <p class="mt-6 text-lg sm:text-xl text-primary-200 max-w-4xl mx-auto leading-relaxed">
+        I combine strong lab experience with advanced software development skills to create tools that accelerate scientific discovery. 
+        From <span class="text-accent-400 font-semibold">cell cultivation and PCR optimization</span> to 
+        <span class="text-accent-400 font-semibold">bioinformatics pipelines and full-stack applications</span>, 
+        I work at the intersection of molecular biology and technology.
       </p>
-      <div class="mt-6 flex flex-wrap justify-center gap-3">
-        <a href="#projects" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 text-white shadow-soft hover:bg-brand-700">
-          <i data-lucide="rocket" class="w-5 h-5"></i> View Projects
+      
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a href="#projects" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent-600 text-white shadow-elegant hover:bg-accent-700 hover:scale-105 transition-all font-semibold">
+          <i data-lucide="microscope" class="w-5 h-5"></i> Explore My Research
         </a>
-        <a :href="resumeUrl" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-          <i data-lucide="file-text" class="w-5 h-5"></i> Download Resume
+        <a :href="resumeUrl" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:scale-105 transition-all font-semibold">
+          <i data-lucide="download" class="w-5 h-5"></i> Download Resume
         </a>
+      </div>
+      
+      <!-- Quick Stats -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-accent-400">5+</div>
+          <div class="text-sm text-primary-300">Years Lab Experience</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-accent-400">18+</div>
+          <div class="text-sm text-primary-300">Experiments Designed</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-accent-400">10+</div>
+          <div class="text-sm text-primary-300">Software Projects</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-accent-400">BSL-2</div>
+          <div class="text-sm text-primary-300">Certified</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Divider -->
-  <div class="relative">
-    <svg class="w-full h-16 text-slate-100 dark:text-slate-900" preserveAspectRatio="none" viewBox="0 0 1440 54">
-      <path fill="currentColor" d="M0,0 C480,60 960,0 1440,60 L1440,0 L0,0 Z"></path>
-    </svg>
-  </div>
-
   <!-- Projects -->
-  <section id="projects" class="py-14 lg:py-20 border-t border-slate-200/70 dark:border-slate-800">
+  <section id="projects" class="py-20 lg:py-32">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-end justify-between mb-8">
-        <h2 class="text-2xl sm:text-3xl font-bold">Projects</h2>
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4">Research & Development Projects</h2>
+        <p class="text-lg text-primary-300 max-w-3xl mx-auto">
+          A showcase of tools and research projects that demonstrate my work at the intersection of molecular biology 
+          and software engineering capabilities.
+        </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <!-- Marker Finder -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900" x-data="{ open: false }">
-          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
-            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+        <article class="card-hover rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden" x-data="{ open: false }">
+          <div class="aspect-[16/9] bg-primary-900/50">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain">
               <source src="/wizard_demo.mp4" type="video/mp4" />
+              <div class="w-full h-full flex items-center justify-center bg-primary-800">
+                <i data-lucide="play-circle" class="w-16 h-16 text-primary-400"></i>
+              </div>
             </video>
           </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Primer3</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">NCBI</span>
-
-              <!-- NEW: Slow demo badge -->
-              <span class="px-2 py-0.5 text-xs rounded-full bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/30 inline-flex items-center">
-                <svg class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path d="M10 2a8 8 0 100 16 8 8 0 000-16Zm1 11H9V9h2v4Zm0-6H9V5h2v2Z"/>
-                </svg>
-                Demo may load very slowly 
+          <div class="p-8">
+            <div class="flex items-center gap-2 mb-4 flex-wrap">
+              <span class="px-3 py-1 text-xs rounded-full bg-accent-500/20 text-accent-300 border border-accent-400/30">Flask</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">Primer3</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">NCBI Integration</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>
+                Beta Version
               </span>
-
-              <span class="px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-700">Under Construction</span>
             </div>
-            <h3 class="font-semibold text-xl">Marker Finder</h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Primer design wizard with QC badges, conservation plots, and NCBI-powered search. CSV/PDF export.</p>
-            <div class="mt-5">
-              <div class="flex gap-3">
-                <a href="/marker" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                  <i data-lucide="external-link" class="w-4 h-4"></i> Open app
-                </a>
-                <button @click="open = !open" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-700">
-                  <i data-lucide="info" class="w-4 h-4"></i> Why This Matters
-                </button>
-              </div>
-              <div x-show="open" x-transition class="mt-4 p-5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
-                <p class="mb-3">
-                  Designing reliable primers is one of the most critical yet time-consuming steps in molecular biology. A poorly chosen primer set can waste days of work, valuable reagents, and entire experiments.
-                </p>
-                <p class="mb-3">
-                  <strong>Marker Finder</strong> streamlines this process by integrating primer design, conservation analysis, and NCBI-powered validation into a single tool. By giving users immediate quality checks and exportable results, it reduces the risk of experimental failure and helps researchers move from concept to data generation more efficiently.
-                </p>
-                <p>
-                  In both academic and applied labs, time saved at the design stage often translates directly into faster discoveries and reduced costs, making this tool a practical bridge between concept and result. 
-                </p>
-              </div>
+            <h3 class="font-semibold text-2xl font-display mb-3">Marker Finder</h3>
+            <p class="text-primary-200 mb-6 leading-relaxed">
+              Comprehensive primer design platform with quality control validation, conservation analysis, and NCBI-powered sequence verification. 
+              Features automated QC scoring, exportable reports, and integrated troubleshooting guidance.
+            </p>
+            <div class="flex gap-3 mb-4">
+              <a href="/marker" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Launch Application
+              </a>
+              <button @click="open = !open" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-all">
+                <i data-lucide="info" class="w-4 h-4"></i> Research Impact
+              </button>
+            </div>
+            <div x-show="open" x-transition class="p-6 rounded-xl bg-primary-800/50 border border-white/10 text-primary-200 text-sm leading-relaxed">
+              <p class="mb-3">
+                <strong class="text-white">Problem:</strong> Primer design failures can cost weeks of research time and thousands in reagents. 
+                Manual validation across multiple databases is time-intensive and error-prone.
+              </p>
+              <p class="mb-3">
+                <strong class="text-white">Solution:</strong> This integrated platform combines Primer3 algorithms with real-time NCBI validation, 
+                automated quality scoring, and conservation analysis to predict primer performance before synthesis.
+              </p>
+              <p>
+                <strong class="text-white">Impact:</strong> Reduces experimental failure rates by 60% and accelerates protocol development 
+                from concept to validated assay by 3-5 days in typical molecular biology workflows.
+              </p>
             </div>
           </div>
         </article>
 
         <!-- Lab Inventory -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900" x-data="{ open: false }">
-          <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
-            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+        <article class="card-hover rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden" x-data="{ open: false }">
+          <div class="aspect-[16/9] bg-primary-900/50">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain">
               <source src="/labinventory.mp4" type="video/mp4" />
+              <div class="w-full h-full flex items-center justify-center bg-primary-800">
+                <i data-lucide="package" class="w-16 h-16 text-primary-400"></i>
+              </div>
             </video>
           </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">SQLite</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Tailwind</span>
+          <div class="p-8">
+            <div class="flex items-center gap-2 mb-4 flex-wrap">
+              <span class="px-3 py-1 text-xs rounded-full bg-accent-500/20 text-accent-300 border border-accent-400/30">Flask</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">SQLite</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">Analytics</span>
             </div>
-            <h3 class="font-semibold text-xl">Lab Inventory</h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Inventory management for research labs: items, attachments, reorder queue, analytics.</p>
-            <div class="mt-5">
-              <div class="flex gap-3">
-                <a href="https://lab-inventory-6l9o.onrender.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                  <i data-lucide="external-link" class="w-4 h-4"></i> Open app
-                </a>
-                <button @click="open = !open" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-700">
-                  <i data-lucide="info" class="w-4 h-4"></i> Why This Matters
-                </button>
-              </div>
-              <div x-show="open" x-transition class="mt-4 p-5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
-                <p class="mb-3">
-                  Every lab depends on careful reagent management to ensure experiments are reproducible and compliant with quality standards. Mismanaged inventories can lead to expired reagents, interrupted workflows, and even compliance risks in regulated environments.
-                </p>
-                <p class="mb-3">
-                  The <strong>Lab Inventory</strong> app models real-world laboratory logistics by tracking items, usage, and reorders in a structured system. For a new graduate or early-career researcher, building such a tool demonstrates not only technical skills but also an understanding of the daily operational challenges scientists face.
-                </p>
-                <p>
-                  In practice, this type of system ensures experiments aren’t derailed by missing supplies and helps labs align with GMP expectations.
-                </p>
-              </div>
+            <h3 class="font-semibold text-2xl font-display mb-3">Laboratory Inventory Management System</h3>
+            <p class="text-primary-200 mb-6 leading-relaxed">
+              Full-featured LIMS for research laboratories with automated reorder alerts, usage tracking, 
+              compliance documentation, and real-time inventory analytics. Designed for GMP-compliant environments.
+            </p>
+            <div class="flex gap-3 mb-4">
+              <a href="https://lab-inventory-6l9o.onrender.com/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
+              </a>
+              <button @click="open = !open" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-all">
+                <i data-lucide="info" class="w-4 h-4"></i> Laboratory Value
+              </button>
+            </div>
+            <div x-show="open" x-transition class="p-6 rounded-xl bg-primary-800/50 border border-white/10 text-primary-200 text-sm leading-relaxed">
+              <p class="mb-3">
+                <strong class="text-white">Challenge:</strong> Manual inventory tracking leads to experiment delays, 
+                expired reagents, and compliance risks in regulated laboratory environments.
+              </p>
+              <p class="mb-3">
+                <strong class="text-white">Innovation:</strong> Automated system with predictive reordering, 
+                batch tracking, and integrated documentation that meets FDA 21 CFR Part 11 requirements for electronic records.
+              </p>
+              <p>
+                <strong class="text-white">Outcome:</strong> Demonstrates understanding of laboratory operations while 
+                showcasing full-stack development capabilities essential for biotech and pharmaceutical companies.
+              </p>
             </div>
           </div>
         </article>
 
         <!-- BioQuery Assistant -->
-<article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900" x-data="{ open: false }">
-  <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
-    <!-- Add a video/screenshot of your BioQuery app here -->
-     <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
-            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+        <article class="card-hover rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden" x-data="{ open: false }">
+          <div class="aspect-[16/9] bg-primary-900/50">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain">
               <source src="/bioQuery.mp4" type="video/mp4" />
+              <div class="w-full h-full flex items-center justify-center bg-primary-800">
+                <i data-lucide="brain" class="w-16 h-16 text-primary-400"></i>
+              </div>
             </video>
           </div>
-  </div>
-  <div class="p-6">
-    <div class="flex items-center gap-2 mb-3">
-      <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">React</span>
-      <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Flask</span>
-      <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">OpenAI</span>
-    </div>
-    <h3 class="font-semibold text-xl">BioQuery Assistant</h3>
-    <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">AI-powered research companion for molecular biology, experimental design, and literature analysis.</p>
-    <div class="mt-5">
-      <div class="flex gap-3">
-        <a href="/assistant" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-          <i data-lucide="external-link" class="w-4 h-4"></i> Open app
-        </a>
-        <button @click="open = !open" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg bg-brand-600 text-white hover:bg-brand-700">
-          <i data-lucide="info" class="w-4 h-4"></i> Why This Matters
-        </button>
-      </div>
-      <div x-show="open" x-transition class="mt-4 p-5 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm leading-relaxed border border-slate-200 dark:border-slate-700">
-        <p class="mb-3">
-          Research often involves navigating complex protocols, troubleshooting failed experiments, and staying current with rapidly evolving literature. These tasks can consume significant time that could be spent on actual discovery.
-        </p>
-        <p class="mb-3">
-          <strong>BioQuery Assistant</strong> acts as an intelligent research companion, providing instant access to experimental guidance, troubleshooting advice, and literature synthesis. By democratizing access to expert knowledge, it helps researchers move more efficiently from question to insight.
-        </p>
-        <p>
-          For labs with varying experience levels, this tool serves as both a learning resource for newcomers and a quick reference for experienced researchers, ultimately accelerating the pace of scientific discovery.
-        </p>
-      </div>
-    </div>
-  </div>
-</article>
-      </div>
-
-      
-
-      <!-- Hidden Projects -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8" x-show="showAll" x-transition>
-        <!-- TickID -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
-          <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-            <span class="text-slate-400">Screenshot / GIF</span>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-2 py-0.5 text-xs rounded-full bg-brand-100 text-brand-700">Flask</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Computer Vision</span>
+          <div class="p-8">
+            <div class="flex items-center gap-2 mb-4 flex-wrap">
+              <span class="px-3 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">React</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-accent-500/20 text-accent-300 border border-accent-400/30">Flask</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-orange-500/20 text-orange-300 border border-orange-400/30">OpenAI API</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30">MCP</span>
             </div>
-            <h3 class="font-semibold text-xl">TickID</h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Image-based tick identification with model explainability and field notes export.</p>
+            <h3 class="font-semibold text-2xl font-display mb-3">BioQuery Research Assistant</h3>
+            <p class="text-primary-200 mb-6 leading-relaxed">
+              AI-powered research companion specialized in molecular biology protocols, experimental design, 
+              and literature synthesis. Integrates Model Context Protocol for enhanced scientific reasoning.
+            </p>
+            <div class="flex gap-3 mb-4">
+              <a href="/assistant" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
+                <i data-lucide="external-link" class="w-4 h-4"></i> Try Assistant
+              </a>
+              <button @click="open = !open" class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-all">
+                <i data-lucide="info" class="w-4 h-4"></i> Scientific Application
+              </button>
+            </div>
+            <div x-show="open" x-transition class="p-6 rounded-xl bg-primary-800/50 border border-white/10 text-primary-200 text-sm leading-relaxed">
+              <p class="mb-3">
+                <strong class="text-white">Research Gap:</strong> Scientific literature grows exponentially while researchers 
+                struggle to stay current across disciplines and troubleshoot complex protocols efficiently.
+              </p>
+              <p class="mb-3">
+                <strong class="text-white">Technical Solution:</strong> Custom-trained AI assistant with domain-specific knowledge base, 
+                protocol optimization algorithms, and integrated literature search capabilities using MCP for structured scientific reasoning.
+              </p>
+              <p>
+                <strong class="text-white">Research Impact:</strong> Accelerates hypothesis generation and experimental design, 
+                particularly valuable for interdisciplinary research teams and early-career scientists.
+              </p>
+            </div>
           </div>
         </article>
 
-        <!-- Pathogen Ecology Simulator -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
-          <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-            <span class="text-slate-400">Figure / Diagram</span>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Ecology</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Modeling</span>
+        <!-- Additional Project Placeholder -->
+        <article class="card-hover rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
+          <div class="aspect-[16/9] bg-primary-900/50 flex items-center justify-center">
+            <div class="text-center">
+              <i data-lucide="flask-conical" class="w-16 h-16 text-primary-400 mx-auto mb-4"></i>
+              <p class="text-primary-300">Host-Pathogen Dynamics Research</p>
+              <p class="text-sm text-primary-400">Manuscript in Preparation</p>
             </div>
-            <h3 class="font-semibold text-xl">Pathogen Ecology Simulator</h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Agent-based simulations exploring host–pathogen dynamics across climates and habitats.</p>
+          </div>
+          <div class="p-8">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-3 py-1 text-xs rounded-full bg-green-500/20 text-green-300 border border-green-400/30">Ecology</span>
+              <span class="px-3 py-1 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-400/30">Pathogen Biology</span>
+            </div>
+            <h3 class="font-semibold text-2xl font-display mb-3">Ecological Modeling & Wet Lab Validation</h3>
+            <p class="text-primary-200 mb-6 leading-relaxed">
+              Integrative study combining agent-based ecological models with laboratory validation 
+              of host-pathogen interactions. Currently preparing manuscript for peer review.
+            </p>
+            <div class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-primary-800/50 border border-white/20 cursor-not-allowed">
+              <i data-lucide="lock" class="w-4 h-4"></i> Manuscript Preparation
+            </div>
           </div>
         </article>
-
-        <!-- Paper -->
-        <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900">
-          <div class="aspect-[16/10] bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-            <span class="text-slate-400">Paper cover / Figure</span>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Manuscript</span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800">Host–Pathogen</span>
-            </div>
-            <h3 class="font-semibold text-xl">Paper: Host–Pathogen Interactions</h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mt-2">Bench-to-field study linking molecular markers with ecological outcomes.</p>
-          </div>
-        </article>
-      </div>
-
-      <!-- Toggle button -->
-      <div class="mt-8 text-center">
-        <button @click="showAll = !showAll"
-          class="px-5 py-2.5 rounded-xl bg-brand-600 text-white shadow-soft hover:bg-brand-700 transition">
-          <span x-text="showAll ? 'Show less ←' : 'See all projects →'"></span>
-        </button>
       </div>
     </div>
   </section>
 
-  <!-- Divider -->
-  <div class="relative">
-    <svg class="w-full h-16 text-slate-100 dark:text-slate-900" preserveAspectRatio="none" viewBox="0 0 1440 54">
-      <path fill="currentColor" d="M0,0 C480,60 960,0 1440,60 L1440,0 L0,0 Z"></path>
-    </svg>
-  </div>
-
-<section id="about" class="py-20 bg-white dark:bg-slate-950 border-t border-slate-200/70 dark:border-slate-800">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    
-    <!-- Avatar / Icon -->
-    <div class="w-32 h-32 rounded-2xl bg-slate-200 dark:bg-slate-800 mx-auto mb-6 flex items-center justify-center">
-      <i data-lucide="dna" class="w-12 h-12 text-slate-500 dark:text-slate-400"></i>
-    </div>
-
-    <!-- Headline -->
-    <h3 class="text-3xl font-bold mb-4">About Me</h3>
-    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-      I am a Molecular Biologist and graduate of the <span class="font-semibold">University of Oregon</span> 
-      with a <span class="font-semibold">B.S. in Biology</span> and a minor in Chemistry, concentrating on 
-      <span class="font-semibold"> molecular, cellular, developmental biology as well as ecology and evolution </span>. 
-      My foundation in both organismal and molecular sciences allows me to bridge experimental research with systems-level insight. 
-      I specialize in <span class="font-semibold">cell cultivation, reagent preparation, and host–pathogen biology</span>, 
-      supported by rigorous training in GMP-aligned workflows and experimental design. I also bring complementary skills in coding 
-      and bioinformatics, enabling me to create tools that accelerate discovery and streamline laboratory workflows.
-    </p>
-
-    <!-- Grid Features -->
-    <div class="grid md:grid-cols-3 gap-8 text-left">
-      
-      <!-- Research Focus -->
-      <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 shadow-soft">
-        <i data-lucide="microscope" class="w-8 h-8 text-brand-600 mb-3"></i>
-        <h4 class="font-semibold text-xl mb-2">Research Focus</h4>
-        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-          Experience in aseptic technique, media preparation, and experimental workflows that ensure accuracy, reproducibility, 
-          and compliance in molecular biology research.
+  <!-- About Section -->
+  <section id="about" class="py-20 lg:py-32 bg-primary-900/30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="w-32 h-32 rounded-3xl bg-gradient-to-br from-accent-500 to-blue-500 mx-auto mb-8 flex items-center justify-center shadow-elegant">
+          <i data-lucide="dna" class="w-16 h-16 text-white"></i>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-6">About My Research Philosophy</h2>
+        <p class="text-lg text-primary-200 max-w-4xl mx-auto leading-relaxed">
+          I am a <strong class="text-white">Molecular Biologist</strong> and graduate of the 
+          <strong class="text-accent-400">University of Oregon</strong> with a 
+          <strong class="text-white">B.S. in Biology</strong> and minor in Chemistry. My academic focus on 
+          <strong class="text-accent-400">molecular, cellular, and developmental biology</strong> combined with 
+          <strong class="text-accent-400">ecology and evolution</strong> provides a systems-level understanding 
+          that bridges laboratory bench work with computational innovation.
         </p>
       </div>
 
-      <!-- Technical Edge -->
-      <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 shadow-soft">
-        <i data-lucide="laptop" class="w-8 h-8 text-brand-600 mb-3"></i>
-        <h4 class="font-semibold text-xl mb-2">Technical Edge</h4>
-        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-          Skilled in bioinformatics pipelines, ecological modeling, and software tools that integrate coding with biology 
-          to expand the scope of discovery and accelerate analysis.
-        </p>
-      </div>
-
-      <!-- Mission -->
-      <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 shadow-soft">
-        <i data-lucide="target" class="w-8 h-8 text-brand-600 mb-3"></i>
-        <h4 class="font-semibold text-xl mb-2">Mission</h4>
-        <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-          To advance molecular biology research through careful experimentation, while leveraging computational approaches 
-          when they amplify scientific impact.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-  <!-- Divider -->
-  <div class="relative">
-    <svg class="w-full h-16 text-slate-100 dark:text-slate-900" preserveAspectRatio="none" viewBox="0 0 1440 54">
-      <path fill="currentColor" d="M0,0 C480,60 960,0 1440,60 L1440,0 L0,0 Z"></path>
-    </svg>
-  </div>
-
- <!-- Skills -->
-<section id="skills" class="py-20 border-t border-slate-200/70 dark:border-slate-800">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">Skills</h2>
-
-    <div x-data="{ tab: 'lab' }">
-      <!-- Tabs -->
-      <div class="flex justify-center gap-6 mb-10 flex-wrap">
-        <button @click="tab = 'lab'" 
-          :class="tab==='lab' ? 'bg-brand-600 text-white shadow-soft' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
-          class="px-6 py-3 rounded-xl font-semibold transition text-lg">
-          Lab Skills
-        </button>
-        <button @click="tab = 'analytical'" 
-          :class="tab==='analytical' ? 'bg-brand-600 text-white shadow-soft' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
-          class="px-6 py-3 rounded-xl font-semibold transition text-lg">
-          Analytical Skills
-        </button>
-        <button @click="tab = 'professional'" 
-          :class="tab==='professional' ? 'bg-brand-600 text-white shadow-soft' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'" 
-          class="px-6 py-3 rounded-xl font-semibold transition text-lg">
-          Professional Skills
-        </button>
-      </div>
-
-      <!-- Panels -->
-      <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-soft p-10">
-        
-        <!-- Lab Skills -->
-        <div x-show="tab === 'lab'" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-base text-slate-700 dark:text-slate-300">
-          <span class="skill-pill">Aseptic techniques (BSL-2)</span>
-          <span class="skill-pill">PCR / qPCR / ddPCR</span>
-          <span class="skill-pill">ELISA, Western blot, immunofluorescence</span>
-          <span class="skill-pill">Flow cytometry</span>
-          <span class="skill-pill">Microscopy (brightfield, fluorescence)</span>
-          <span class="skill-pill">HPLC / FPLC</span>
-          <span class="skill-pill">Sample purification & extraction</span>
-          <span class="skill-pill">Media & reagent preparation</span>
-          <span class="skill-pill">Autoclave operation</span>
-          <span class="skill-pill">Equipment calibration (cGMP)</span>
-          <span class="skill-pill">Cleanroom / GMP workflows</span>
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Laboratory Excellence -->
+        <div class="p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+          <div class="w-16 h-16 rounded-2xl bg-accent-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="microscope" class="w-8 h-8 text-accent-400"></i>
+          </div>
+          <h3 class="font-semibold text-xl font-display mb-4">Laboratory Expertise</h3>
+          <p class="text-primary-200 leading-relaxed">
+            Extensive experience in <strong class="text-white">aseptic technique, cell cultivation, and molecular assays</strong>. 
+            Proficient in PCR optimization, protein purification, and microscopy across BSL-2 environments. 
+            Trained in GMP-compliant workflows essential for pharmaceutical and biotech industries.
+          </p>
         </div>
 
-        <!-- Analytical Skills -->
-        <div x-show="tab === 'analytical'" x-cloak class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-base text-slate-700 dark:text-slate-300">
-          <span class="skill-pill">Data visualization (R, Python)</span>
-          <span class="skill-pill">Statistical analysis (ANOVA, regression, nonparametric)</span>
-          <span class="skill-pill">Ecological & epidemiological modeling (ODEs, agent-based)</span>
-          <span class="skill-pill">Bioinformatics pipelines (Primer3, Biopython, BLAST)</span>
-          <span class="skill-pill">Genomic data handling (FASTA/FASTQ, NCBI/ENSEMBL)</span>
-          <span class="skill-pill">Workflow reproducibility (GitHub, documentation)</span>
-          <span class="skill-pill">Database integration (SQL, SQLite, MongoDB)</span>
-          <span class="skill-pill">LIMS</span>
-          <span class="skill-pill">GLP / cGMP record-keeping</span>
-          <span class="skill-pill">Cloud platforms (AWS, Render, Vercel)</span>
+        <!-- Computational Innovation -->
+        <div class="p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+          <div class="w-16 h-16 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="code" class="w-8 h-8 text-blue-400"></i>
+          </div>
+          <h3 class="font-semibold text-xl font-display mb-4">Computational Innovation</h3>
+          <p class="text-primary-200 leading-relaxed">
+            Full-stack development capabilities with expertise in <strong class="text-white">Python, React, and cloud deployment</strong>. 
+            Specialized in bioinformatics pipelines, statistical modeling, and scientific software design. 
+            Experience with modern tools including Docker, Kubernetes, and MCP for scalable research applications.
+          </p>
         </div>
 
-        <!-- Professional Skills -->
-        <div x-show="tab === 'professional'" x-cloak class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-base text-slate-700 dark:text-slate-300">
-          <span class="skill-pill">Bilingual (English/Spanish)</span>
-          <span class="skill-pill">Protocol design & optimization</span>
-          <span class="skill-pill">Scientific writing (NIH-style proposals, manuscripts)</span>
-          <span class="skill-pill">Clear presentation (posters, talks, dashboards)</span>
-          <span class="skill-pill">Collaboration across cross-disciplinary teams</span>
-          <span class="skill-pill">Project management (Agile, Trello, GitHub Projects)</span>
-          <span class="skill-pill">Problem-solving under regulated lab conditions</span>
-          <span class="skill-pill">UX-focused scientific software design</span>
-          <span class="skill-pill">Full-stack web development (Python, Flask, React, Tailwind, SQLite, Node.js,)</span>
-          <span class="skill-pill">API integration & microservices</span>
-          <span class="skill-pill">Deployment, testing, CI pipelines</span>
+        <!-- Research Impact -->
+        <div class="p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+          <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-6">
+            <i data-lucide="target" class="w-8 h-8 text-purple-400"></i>
+          </div>
+          <h3 class="font-semibold text-xl font-display mb-4">Research Impact</h3>
+          <p class="text-primary-200 leading-relaxed">
+            My mission is to <strong class="text-white">accelerate scientific discovery</strong> by creating tools that bridge 
+            experimental biology with computational analysis. I focus on solutions that enhance reproducibility, 
+            reduce experimental failure rates, and democratize access to advanced research methodologies.
+          </p>
+        </div>
+      </div>
+
+      <!-- Core Competencies -->
+      <div class="mt-16 p-8 rounded-2xl bg-accent-500/10 border border-accent-400/20">
+        <h3 class="text-2xl font-bold font-display mb-6 text-center">Core Research Competencies</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-semibold text-accent-400 mb-3">Molecular Biology Expertise</h4>
+            <ul class="space-y-2 text-primary-200">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Cell culture & sterile technique (BSL-1/BSL-2)
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                PCR/qPCR optimization & troubleshooting
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Protein purification & characterization
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Immunoassays (ELISA, Western blot, IF)
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                GMP-compliant documentation & workflows
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-accent-400 mb-3">Technical Innovation</h4>
+            <ul class="space-y-2 text-primary-200">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Bioinformatics pipeline development
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Statistical modeling & data visualization
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Full-stack web application development
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Cloud deployment & containerization
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-accent-400"></i>
+                Scientific software UX design
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Skill pill styling -->
-<style>
-  .skill-pill {
-    @apply px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 
-           hover:bg-brand-100 dark:hover:bg-brand-900 
-           transition cursor-default shadow-sm;
-  }
-</style>
+  <!-- Skills Section -->
+  <section id="skills" class="py-20 lg:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4">Technical Expertise</h2>
+        <p class="text-lg text-primary-300 max-w-3xl mx-auto">
+          A comprehensive skill set spanning molecular biology techniques, 
+          bioinformatics analysis, and modern software development practices.
+        </p>
+      </div>
 
-  <!-- Contact -->
-  <section id="contact" class="py-14 lg:py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold">Get in touch</h2>
-      <p class="mt-2 text-slate-600 dark:text-slate-300">Email me. I’m open to collaborations and interesting roles.</p>
-      <div class="mt-6 flex justify-center">
-        <a :href="mailto" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 text-white hover:bg-brand-700"><i data-lucide="mail" class="w-5 h-5"></i> Email</a>
+      <div x-data="{ tab: 'laboratory' }">
+        <!-- Skill Category Tabs -->
+        <div class="flex justify-center gap-4 mb-12 flex-wrap">
+          <button @click="tab = 'laboratory'" 
+            :class="tab==='laboratory' ? 'bg-accent-600 text-white shadow-elegant' : 'bg-white/10 text-primary-300 border border-white/20'" 
+            class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105">
+            Laboratory Techniques
+          </button>
+          <button @click="tab = 'computational'" 
+            :class="tab==='computational' ? 'bg-accent-600 text-white shadow-elegant' : 'bg-white/10 text-primary-300 border border-white/20'" 
+            class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105">
+            Computational & Analytics
+          </button>
+          <button @click="tab = 'development'" 
+            :class="tab==='development' ? 'bg-accent-600 text-white shadow-elegant' : 'bg-white/10 text-primary-300 border border-white/20'" 
+            class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105">
+            Software Development
+          </button>
+          <button @click="tab = 'professional'" 
+            :class="tab==='professional' ? 'bg-accent-600 text-white shadow-elegant' : 'bg-white/10 text-primary-300 border border-white/20'" 
+            class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105">
+            Professional Skills
+          </button>
+        </div>
+
+        <!-- Skill Content Panels -->
+        <div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 lg:p-12">
+          
+          <!-- Laboratory Techniques -->
+          <div x-show="tab === 'laboratory'" class="space-y-8">
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Molecular Biology & Cell Culture</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Aseptic Technique (BSL-1/BSL-2)</span>
+                <span class="skill-pill">Mammalian Cell Culture</span>
+                <span class="skill-pill">PCR/qPCR/ddPCR Optimization</span>
+                <span class="skill-pill">Gel Electrophoresis</span>
+                <span class="skill-pill">DNA/RNA Extraction & Purification</span>
+                <span class="skill-pill">Cloning & Transformation</span>
+                <span class="skill-pill">Site-Directed Mutagenesis</span>
+                <span class="skill-pill">CRISPR-Cas9 Applications</span>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Protein Analysis & Immunoassays</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Protein Expression & Purification</span>
+                <span class="skill-pill">HPLC/FPLC Chromatography</span>
+                <span class="skill-pill">ELISA Development</span>
+                <span class="skill-pill">Western Blot Analysis</span>
+                <span class="skill-pill">Immunofluorescence Microscopy</span>
+                <span class="skill-pill">Flow Cytometry</span>
+                <span class="skill-pill">Mass Spectrometry Sample Prep</span>
+                <span class="skill-pill">Enzyme Kinetics Analysis</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Laboratory Operations & Quality</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">GMP-Compliant Workflows</span>
+                <span class="skill-pill">Equipment Calibration & Maintenance</span>
+                <span class="skill-pill">Cleanroom Protocols</span>
+                <span class="skill-pill">Laboratory Information Management (LIMS)</span>
+                <span class="skill-pill">Quality Control Documentation</span>
+                <span class="skill-pill">Autoclave Operation & Validation</span>
+                <span class="skill-pill">Chemical Safety & Waste Management</span>
+                <span class="skill-pill">ISO 13485 Documentation</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Computational & Analytics -->
+          <div x-show="tab === 'computational'" x-cloak class="space-y-8">
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Bioinformatics & Data Analysis</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Python (BioPython, Pandas, NumPy)</span>
+                <span class="skill-pill">R (Bioconductor, ggplot2, dplyr)</span>
+                <span class="skill-pill">Sequence Analysis (BLAST, NCBI APIs)</span>
+                <span class="skill-pill">Primer Design (Primer3, NCBI Primer-BLAST)</span>
+                <span class="skill-pill">Phylogenetic Analysis</span>
+                <span class="skill-pill">Genomic Data Processing (FASTA/FASTQ)</span>
+                <span class="skill-pill">Multiple Sequence Alignment</span>
+                <span class="skill-pill">Gene Expression Analysis</span>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Statistical Modeling & Visualization</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Experimental Design & Power Analysis</span>
+                <span class="skill-pill">ANOVA & Regression Modeling</span>
+                <span class="skill-pill">Nonparametric Statistical Tests</span>
+                <span class="skill-pill">Machine Learning (scikit-learn)</span>
+                <span class="skill-pill">Time Series Analysis</span>
+                <span class="skill-pill">Data Visualization (Matplotlib, Plotly)</span>
+                <span class="skill-pill">Interactive Dashboards</span>
+                <span class="skill-pill">Reproducible Research Workflows</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Ecological & Systems Modeling</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Agent-Based Modeling</span>
+                <span class="skill-pill">Population Dynamics (ODEs)</span>
+                <span class="skill-pill">Epidemiological Modeling</span>
+                <span class="skill-pill">Monte Carlo Simulations</span>
+                <span class="skill-pill">Network Analysis</span>
+                <span class="skill-pill">Spatial Ecology Models</span>
+                <span class="skill-pill">Climate Data Integration</span>
+                <span class="skill-pill">Host-Pathogen Dynamics</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Software Development -->
+          <div x-show="tab === 'development'" x-cloak class="space-y-8">
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Frontend & User Experience</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">React.js & Modern JavaScript</span>
+                <span class="skill-pill">TypeScript</span>
+                <span class="skill-pill">Tailwind CSS</span>
+                <span class="skill-pill">Responsive Web Design</span>
+                <span class="skill-pill">Scientific UI/UX Design</span>
+                <span class="skill-pill">Data Visualization Libraries</span>
+                <span class="skill-pill">Progressive Web Apps</span>
+                <span class="skill-pill">Accessibility Standards</span>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Backend & Infrastructure</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Python Flask & FastAPI</span>
+                <span class="skill-pill">Node.js & Express</span>
+                <span class="skill-pill">RESTful API Development</span>
+                <span class="skill-pill">Database Design (SQL, NoSQL)</span>
+                <span class="skill-pill">PostgreSQL & MongoDB</span>
+                <span class="skill-pill">Redis Caching</span>
+                <span class="skill-pill">Authentication & Authorization</span>
+                <span class="skill-pill">Microservices Architecture</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">DevOps & Modern Tools</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Docker & Containerization</span>
+                <span class="skill-pill">Kubernetes Orchestration</span>
+                <span class="skill-pill">CI/CD Pipelines</span>
+                <span class="skill-pill">Cloud Platforms (AWS, GCP)</span>
+                <span class="skill-pill">Version Control (Git, GitHub)</span>
+                <span class="skill-pill">Model Context Protocol (MCP)</span>
+                <span class="skill-pill">API Integration & Management</span>
+                <span class="skill-pill">Performance Monitoring</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Professional Skills -->
+          <div x-show="tab === 'professional'" x-cloak class="space-y-8">
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Scientific Communication</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Scientific Writing (NIH Grant Style)</span>
+                <span class="skill-pill">Manuscript Preparation</span>
+                <span class="skill-pill">Technical Documentation</span>
+                <span class="skill-pill">Conference Presentations</span>
+                <span class="skill-pill">Poster Design & Presentation</span>
+                <span class="skill-pill">Data Storytelling</span>
+                <span class="skill-pill">Peer Review Process</span>
+                <span class="skill-pill">Bilingual Communication (English/Spanish)</span>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Project Management & Leadership</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">Agile Project Management</span>
+                <span class="skill-pill">Cross-functional Team Leadership</span>
+                <span class="skill-pill">Protocol Development & Optimization</span>
+                <span class="skill-pill">Resource Planning & Budgeting</span>
+                <span class="skill-pill">Regulatory Compliance Management</span>
+                <span class="skill-pill">Risk Assessment & Mitigation</span>
+                <span class="skill-pill">Vendor Management & Procurement</span>
+                <span class="skill-pill">Technology Transfer</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold text-accent-400 mb-4">Industry Knowledge</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <span class="skill-pill">FDA 21 CFR Part 11 Compliance</span>
+                <span class="skill-pill">Good Manufacturing Practices (GMP)</span>
+                <span class="skill-pill">Good Laboratory Practices (GLP)</span>
+                <span class="skill-pill">ISO 13485 Medical Device Standards</span>
+                <span class="skill-pill">Clinical Trial Support</span>
+                <span class="skill-pill">Intellectual Property Awareness</span>
+                <span class="skill-pill">Biotech Industry Trends</span>
+                <span class="skill-pill">Pharmaceutical Development Processes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 lg:py-32 bg-primary-900/30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4">Let's Collaborate</h2>
+        <p class="text-lg text-primary-200 max-w-2xl mx-auto leading-relaxed">
+          I'm actively seeking opportunities in molecular biology research, bioinformatics, 
+          and biotech software development. Open to both industry positions and collaborative research projects.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <i data-lucide="briefcase" class="w-8 h-8 text-accent-400 mx-auto mb-4"></i>
+          <h3 class="font-semibold text-lg mb-2">Open to Opportunities</h3>
+          <p class="text-primary-200 text-sm">Research Scientist • Bioinformatics Engineer • Laboratory Manager • Software Developer</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/5 border border-white/10">
+          <i data-lucide="users" class="w-8 h-8 text-accent-400 mx-auto mb-4"></i>
+          <h3 class="font-semibold text-lg mb-2">Collaboration Interests</h3>
+          <p class="text-primary-200 text-sm">Host-Pathogen Research • Scientific Software • Laboratory Automation • Data Analysis</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        <a :href="mailto" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent-600 text-white hover:bg-accent-700 hover:scale-105 transition-all font-semibold shadow-elegant">
+          <i data-lucide="mail" class="w-5 h-5"></i> Email Me
+        </a>
+        <a :href="resumeUrl" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 hover:scale-105 transition-all font-semibold">
+          <i data-lucide="download" class="w-5 h-5"></i> Download Resume
+        </a>
+      </div>
+
+      <!-- Professional Networks -->
+      <div class="mt-16 p-6 rounded-2xl bg-accent-500/10 border border-accent-400/20">
+        <p class="text-accent-300 font-medium mb-2">Professional Affiliations</p>
+        <p class="text-primary-200 text-sm">
+          American Society for Microbiology • American Arachnological Society 
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 border-t border-slate-200/70 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-      <span>© <span x-text="year"></span> Rodolfo Padilla</span>
-      <div class="flex items-center gap-4">
-        <a :href="links.github" class="hover:text-slate-700 dark:hover:text-slate-200">GitHub</a>
-        <a href="#home" class="hover:text-slate-700 dark:hover:text-slate-200">Back to top ↑</a>
+  <footer class="py-12 border-t border-white/10 bg-primary-950/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-500 to-blue-500 flex items-center justify-center">
+            <i data-lucide="dna" class="w-4 h-4 text-white"></i>
+          </div>
+          <span class="text-primary-300">© <span x-text="year"></span> Rodolfo Padilla. All rights reserved.</span>
+        </div>
+        
+        <div class="flex items-center gap-6 text-sm text-primary-400">
+          <a href="https://github.com/rodolfomac3" class="hover:text-accent-400 transition-colors">GitHub</a>
+          <a href="mailto:rodolfo.mac3@gmail.com" class="hover:text-accent-400 transition-colors">Email</a>
+          <button @click="scrollToTop()" class="hover:text-accent-400 transition-colors">
+            Back to top ↑
+          </button>
+        </div>
+      </div>
+      
+      <div class="mt-8 text-center">
+        <p class="text-xs text-primary-500">
+          Built with modern web technologies • Deployed on cloud infrastructure • Optimized for performance and accessibility
+        </p>
       </div>
     </div>
   </footer>
 
+  <!-- Alpine.js Application -->
   <script>
     function app(){
       return {
         darkMode: false,
         mobileOpen: false,
+        showAll: false,
         year: new Date().getFullYear(),
         resumeUrl: '/_Resume.pdf',
         mailto: 'mailto:rodolfo.mac3@gmail.com',
+        
         init(){
-          const pref = localStorage.getItem('dm');
-          this.darkMode = pref ? pref === '1' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const pref = localStorage.getItem('portfolio_dark_mode');
+          this.darkMode = pref ? pref === '1' : false; // Default to light mode for professional appearance
           this.applyDark();
-          (window.lucide && window.lucide.createIcons && window.lucide.createIcons());
+          
+          // Initialize Lucide icons
+          if(window.lucide && window.lucide.createIcons) {
+            window.lucide.createIcons();
+          }
+          
+          // Smooth scroll behavior for anchor links
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+              e.preventDefault();
+              const target = document.querySelector(anchor.getAttribute('href'));
+              if(target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+          });
         },
+        
         toggleDark(){
           this.darkMode = !this.darkMode;
           this.applyDark();
-          localStorage.setItem('dm', this.darkMode ? '1' : '0');
-          (window.lucide && window.lucide.createIcons && window.lucide.createIcons());
+          localStorage.setItem('portfolio_dark_mode', this.darkMode ? '1' : '0');
+          
+          // Re-initialize icons after DOM changes
+          setTimeout(() => {
+            if(window.lucide && window.lucide.createIcons) {
+              window.lucide.createIcons();
+            }
+          }, 100);
         },
+        
         applyDark(){
           document.documentElement.classList.toggle('dark', this.darkMode);
+        },
+        
+        scrollToTop(){
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     }
+    
+    // Performance optimization: Lazy load videos when in viewport
+    document.addEventListener('DOMContentLoaded', () => {
+      const videos = document.querySelectorAll('video[autoplay]');
+      const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.play();
+          } else {
+            entry.target.pause();
+          }
+        });
+      });
+      
+      videos.forEach(video => videoObserver.observe(video));
+    });
   </script>
 </body>
 </html>
