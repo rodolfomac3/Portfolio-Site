@@ -3,16 +3,14 @@
   "rewrites": [
     { "source": "/marker", "destination": "https://markerfinder.onrender.com/" },
     { "source": "/marker/(.*)", "destination": "https://markerfinder.onrender.com/$1" },
-
     { "source": "/designer", "destination": "https://markerfinder.onrender.com/designer" },
     { "source": "/designer/(.*)", "destination": "https://markerfinder.onrender.com/designer/$1" },
-
     { "source": "/search", "destination": "https://markerfinder.onrender.com/search" },
     { "source": "/search/(.*)", "destination": "https://markerfinder.onrender.com/search/$1" },
-
     { "source": "/api/(.*)", "destination": "https://markerfinder.onrender.com/api/$1" },
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
-    { "source": "/health", "destination": "https://markerfinder.onrender.com/health" }
+    { "source": "/health", "destination": "https://markerfinder.onrender.com/health" },
+    { "source": "/research-story", "destination": "/research-story.html" }
   ],
   "redirects": [
     { "source": "/lab", "destination": "https://lab-inventory-6l9o.onrender.com/", "permanent": false },
