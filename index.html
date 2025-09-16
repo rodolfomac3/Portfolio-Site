@@ -208,9 +208,11 @@
 <article class="card-hover rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900" x-data="{ open: false }">
   <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
     <!-- Add a video/screenshot of your BioQuery app here -->
-    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
-      <i data-lucide="message-circle" class="w-16 h-16 text-white"></i>
-    </div>
+     <div class="aspect-[16/9] bg-slate-100 dark:bg-slate-800">
+            <video autoplay muted loop playsinline class="w-full h-full object-contain bg-black">
+              <source src="/bioQuery.mp4" type="video/mp4" />
+            </video>
+          </div>
   </div>
   <div class="p-6">
     <div class="flex items-center gap-2 mb-3">
