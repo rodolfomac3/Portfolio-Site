@@ -12,12 +12,10 @@
 
     { "source": "/api/(.*)", "destination": "https://markerfinder.onrender.com/api/$1" },
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
-    { "source": "/health", "destination": "https://markerfinder.onrender.com/health" },
-
-    {"source": "/assistant", "destination": "https://bioquery-frontend.onrender.com/"},
-   {"source": "/assistant/(.*)", "destination": "https://bioquery-frontend.onrender.com/$1"}
+    { "source": "/health", "destination": "https://markerfinder.onrender.com/health" }
   ],
   "redirects": [
-    { "source": "/lab", "destination": "https://lab-inventory-6l9o.onrender.com/", "permanent": false }
+    { "source": "/lab", "destination": "https://lab-inventory-6l9o.onrender.com/", "permanent": false },
+    { "source": "/assistant", "destination": "https://bioquery-frontend.onrender.com/", "permanent": false }
   ]
 }
