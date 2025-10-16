@@ -1,5 +1,59 @@
 {
   "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).mp4",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).pdf",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
+        }
+      ]
+    }
+  ],
+  
   "rewrites": [
     { "source": "/marker", "destination": "https://markerfinder.onrender.com/" },
     { "source": "/marker/(.*)", "destination": "https://markerfinder.onrender.com/$1" },
@@ -13,8 +67,11 @@
     { "source": "/research-story", "destination": "/research-story.html" },
     { "source": "/lyme-model", "destination": "/lyme-model.html" }
   ],
+  
   "redirects": [
     { "source": "/lab", "destination": "https://lab-inventory-6l9o.onrender.com/", "permanent": false },
-    { "source": "/assistant", "destination": "https://bioquery-frontend.onrender.com/", "permanent": false }
+    { "source": "/assistant", "destination": "https://bioquery-frontend.onrender.com/", "permanent": false },
+    { "source": "/resume", "destination": "/RodolfoPadilla_.pdf", "permanent": false },
+    { "source": "/cv", "destination": "/RodolfoPadilla_.pdf", "permanent": false }
   ]
 }
