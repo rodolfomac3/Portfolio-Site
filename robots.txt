@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /static/
+
+# Sitemap location
+Sitemap: https://portfolio-site-pi-vert.vercel.app/sitemap.xml
+
+# Crawl-delay for bots that respect it
+Crawl-delay: 1
+
+# Allow search engines to index everything
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
