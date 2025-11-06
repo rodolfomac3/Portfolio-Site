@@ -528,7 +528,13 @@
               </video>
               <div x-show="!project.video" class="w-full h-full flex items-center justify-center bg-gradient-to-br" 
                    :class="project.gradient">
-                <i :data-lucide="project.icon" class="w-16 h-16 text-white/50"></i>
+                <img x-show="project.icon && (project.icon.includes('.png') || project.icon.includes('.jpg') || project.icon.includes('.jpeg') || project.icon.includes('.svg') || project.icon.includes('.gif'))" 
+                     :src="project.icon" 
+                     :alt="project.title" 
+                     class="max-w-full max-h-full object-contain" />
+                <i x-show="project.icon && !(project.icon.includes('.png') || project.icon.includes('.jpg') || project.icon.includes('.jpeg') || project.icon.includes('.svg') || project.icon.includes('.gif'))" 
+                   :data-lucide="project.icon" 
+                   class="w-16 h-16 text-white/50"></i>
               </div>
               
               <!-- Project Status Badge -->
@@ -1151,6 +1157,27 @@
             detailsOpen: false,
             gradient: 'from-red-900/30 to-orange-900/30',
             icon: 'microscope'
+          },
+          {
+            id: 'parasitiformes-biodiversity',
+            title: 'Parasitiformes Biodiversity (Maryland)',
+            category: 'bioinfo',
+            description: 'A community-driven dataset tracking parasitiforme biodiversity across Maryland. I\'ve used this project to explore real-world ecological data, collecting and curating observations through iNaturalist, visualizing spatial trends in parasitiforme populations, and building preliminary models to understand range shifts using R and ggplot2.',
+            tech: ['R', 'ggplot2', 'QGIS', 'iNaturalist API'],
+            video: null,
+            link: 'https://www.inaturalist.org/projects/parasitiformes-biodiversity-md/journal',
+            linkText: 'View iNaturalist Journal',
+            github: null,
+            status: 'live',
+            metrics: [
+              { label: 'Observations', value: 'Ongoing' },
+              { label: 'Tools', value: '4' },
+              { label: 'Focus', value: 'MD State' }
+            ],
+            details: '<p class="mb-3"><strong class="text-white">Project:</strong> Community-driven dataset tracking parasitiforme biodiversity across Maryland.</p><p class="mb-3"><strong class="text-white">Methods:</strong> Data collection and curation through iNaturalist, spatial visualization with QGIS, and statistical analysis with R and ggplot2.</p><p><strong class="text-white">Impact:</strong> Exploring real-world ecological data to understand range shifts and population trends in parasitiforme species.</p>',
+            detailsOpen: false,
+            gradient: 'from-green-900/30 to-emerald-900/30',
+            icon: '/MD_parasitiformes.png'
           }
         ],
         
