@@ -86,6 +86,18 @@
     }
   </script>
 
+  <!-- Set dark mode before Alpine initializes -->
+  <script>
+    (function() {
+      const pref = localStorage.getItem('portfolio_dark_mode');
+      const isDark = pref !== null ? pref === '1' : true; // Default to dark
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <!-- Lucide icons -->
@@ -97,6 +109,9 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   
   <style>
+    /* Alpine.js x-cloak - hide elements until Alpine initializes */
+    [x-cloak] { display: none !important; }
+    
     /* Enhanced styles */
     .card-hover { 
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -111,6 +126,10 @@
     
     .glass {
       backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .dark .glass {
       background-color: rgba(17, 25, 40, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.125);
     }
@@ -133,52 +152,6 @@
       @apply px-4 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 
              hover:bg-accent-500/20 hover:border-accent-400/30 hover:scale-105
              transition-all duration-300 cursor-default shadow-soft text-sm font-medium;
-    }
-    
-    /* Terminal styles */
-    .terminal {
-      font-family: 'Courier New', monospace;
-      background: #0a0e27;
-      border: 1px solid #1e293b;
-      border-radius: 0.5rem;
-      overflow: hidden;
-    }
-    
-    .terminal-header {
-      background: #1e293b;
-      padding: 0.5rem;
-      display: flex;
-      gap: 0.5rem;
-    }
-    
-    .terminal-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-    
-    .terminal-body {
-      padding: 1rem;
-      color: #10b981;
-      font-size: 0.875rem;
-      line-height: 1.5;
-    }
-    
-    .typing-effect {
-      overflow: hidden;
-      border-right: .15em solid #10b981;
-      white-space: nowrap;
-      animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-    }
-    
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-    
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #10b981 }
     }
     
     /* Loading animation */
@@ -275,15 +248,15 @@
   </style>
 </head>
 
-<body class="bg-primary-950 text-white font-body antialiased">
+<body class="bg-primary-50 dark:bg-primary-950 text-primary-900 dark:text-white font-body antialiased transition-colors duration-300">
   <!-- Scroll Progress Indicator -->
   <div class="scroll-indicator" x-show="scrollProgress > 0" :style="`transform: scaleX(${scrollProgress / 100})`"></div>
   
   <!-- Enhanced Header with sticky behavior -->
-  <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10 transition-all duration-300" 
+  <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-primary-200 dark:border-white/10 transition-all duration-300" 
           :class="{ 'py-2': scrolled, 'py-4': !scrolled }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-3 font-semibold text-white hover:text-accent-400 transition-colors group">
+      <a href="#home" class="flex items-center gap-3 font-semibold text-primary-900 dark:text-white hover:text-accent-400 transition-colors group">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-500 to-blue-500 shadow-elegant flex items-center justify-center group-hover:scale-110 transition-transform">
           <i data-lucide="dna" class="w-5 h-5 text-white"></i>
         </div>
@@ -293,7 +266,7 @@
       <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
         <template x-for="item in navItems" :key="item.href">
           <a :href="item.href" 
-             class="relative text-primary-300 hover:text-accent-400 transition-colors py-2"
+             class="relative text-primary-600 dark:text-primary-300 hover:text-accent-400 transition-colors py-2"
              @mouseenter="navHover = item.href"
              @mouseleave="navHover = null">
             <span x-text="item.name"></span>
@@ -306,7 +279,10 @@
           <span>Resume</span>
           <span class="ml-1 text-xs bg-white/20 px-2 py-0.5 rounded-full" x-show="resumeDownloads > 0" x-text="resumeDownloads"></span>
         </a>
-        <button @click="toggleDark()" class="ml-1 p-2 rounded-lg hover:bg-white/10 transition-colors" :title="darkMode ? 'Light mode' : 'Dark mode'">
+        <button @click="toggleDark()" 
+                class="ml-1 p-2 rounded-lg hover:bg-primary-200 dark:hover:bg-white/10 transition-colors" 
+                :title="darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+                type="button">
           <i :data-lucide="darkMode ? 'sun' : 'moon'" class="w-4 h-4"></i>
         </button>
       </nav>
@@ -332,7 +308,7 @@
       <div class="px-4 py-3 flex flex-col gap-3 text-sm">
         <template x-for="item in navItems" :key="item.href">
           <a :href="item.href" @click="mobileOpen=false" 
-             class="text-primary-300 hover:text-accent-400 py-2 border-b border-white/5">
+             class="text-primary-600 dark:text-primary-300 hover:text-accent-400 py-2 border-b border-primary-200 dark:border-white/5">
             <span x-text="item.name"></span>
           </a>
         </template>
@@ -340,7 +316,9 @@
           <a :href="resumeUrl" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
             <i data-lucide="file-text" class="w-4 h-4"></i> Resume
           </a>
-          <button @click="toggleDark()" class="p-2 rounded-lg hover:bg-white/10 transition-colors">
+          <button @click="toggleDark()" 
+                  class="p-2 rounded-lg hover:bg-primary-200 dark:hover:bg-white/10 transition-colors"
+                  type="button">
             <i :data-lucide="darkMode ? 'sun' : 'moon'" class="w-4 h-4"></i>
           </button>
         </div>
@@ -350,7 +328,7 @@
 
   <!-- Enhanced Hero Section -->
   <section id="home" class="relative min-h-screen flex items-center justify-center hero-bg overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-r from-primary-950/90 to-primary-900/90"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-primary-50/90 dark:from-primary-950/90 to-primary-100/90 dark:to-primary-900/90"></div>
     
     <!-- Enhanced Animated Background Elements -->
     <div class="absolute inset-0">
@@ -368,7 +346,7 @@
     <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
       <!-- Status Badge -->
       <div class="mb-8" data-aos="fade-down">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500/20 border border-accent-400/30 text-accent-300 text-sm font-medium mb-6">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500/20 border border-accent-400/30 text-accent-700 dark:text-accent-300 text-sm font-medium mb-6">
           <div class="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></div>
           <span x-text="statusText"></span>
         </div>
@@ -376,15 +354,15 @@
       
       <!-- Main Heading with typing effect -->
       <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-display leading-tight mb-6" data-aos="fade-up">
-        <span class="block text-white mb-2">Molecular Biologist</span>
+        <span class="block text-primary-900 dark:text-white mb-2">Molecular Biologist</span>
         <span class="block text-gradient mb-2">& Research Software Engineer</span>
-        <span class="block text-primary-300 text-2xl sm:text-3xl lg:text-4xl font-normal">
+        <span class="block text-primary-700 dark:text-primary-300 text-2xl sm:text-3xl lg:text-4xl font-normal">
           <span x-text="tagline"></span><span class="animate-pulse">|</span>
         </span>
       </h1>
       
       <!-- Enhanced Description -->
-      <p class="mt-6 text-lg sm:text-xl text-primary-200 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+      <p class="mt-6 text-lg sm:text-xl text-primary-700 dark:text-primary-200 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
         I combine <span class="text-accent-400 font-semibold">5+ years of laboratory experience</span> with 
         <span class="text-accent-400 font-semibold">advanced software development skills</span> to create tools that accelerate scientific discovery. 
         From <span class="text-accent-400 font-semibold">cell cultivation and PCR optimization</span> to 
@@ -399,10 +377,6 @@
           <span>Explore My Research</span>
           <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
         </a>
-        <button @click="showTerminal = true" class="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:scale-105 transition-all font-semibold">
-          <i data-lucide="terminal" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i> 
-          <span>Interactive Terminal</span>
-        </button>
       </div>
       
       <!-- Enhanced Stats with counters -->
@@ -411,72 +385,32 @@
           <div class="text-3xl font-bold text-accent-400 group-hover:scale-110 transition-transform">
             <span x-text="experienceYears"></span>+
           </div>
-          <div class="text-sm text-primary-300">Years Lab Experience</div>
+          <div class="text-sm text-primary-700 dark:text-primary-300">Years Lab Experience</div>
         </div>
         <div class="text-center group cursor-pointer" @click="showStat('experiments')">
           <div class="text-3xl font-bold text-accent-400 group-hover:scale-110 transition-transform">
             <span x-text="experimentsCount"></span>+
           </div>
-          <div class="text-sm text-primary-300">Experiments Designed</div>
+          <div class="text-sm text-primary-700 dark:text-primary-300">Experiments Designed</div>
         </div>
         <div class="text-center group cursor-pointer" @click="showStat('projects')">
           <div class="text-3xl font-bold text-accent-400 group-hover:scale-110 transition-transform">
             <span x-text="projectsCount"></span>+
           </div>
-          <div class="text-sm text-primary-300">Software Projects</div>
+          <div class="text-sm text-primary-700 dark:text-primary-300">Software Projects</div>
         </div>
         <div class="text-center group cursor-pointer" @click="showStat('certification')">
           <div class="text-3xl font-bold text-accent-400 group-hover:scale-110 transition-transform">BSL-2</div>
-          <div class="text-sm text-primary-300">Certified</div>
+          <div class="text-sm text-primary-700 dark:text-primary-300">Certified</div>
         </div>
       </div>
       
       <!-- Scroll indicator -->
       <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <i data-lucide="chevron-down" class="w-6 h-6 text-primary-400"></i>
+        <i data-lucide="chevron-down" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
       </div>
     </div>
   </section>
-
-  <!-- Terminal Modal -->
-  <div x-show="showTerminal" x-cloak
-       @click.away="showTerminal = false"
-       class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-    <div class="terminal max-w-2xl w-full" @click.stop>
-      <div class="terminal-header">
-        <div class="terminal-dot bg-red-500"></div>
-        <div class="terminal-dot bg-yellow-500"></div>
-        <div class="terminal-dot bg-green-500"></div>
-        <span class="ml-auto text-xs text-primary-400 mr-2">rodolfo@biolab ~ %</span>
-      </div>
-      <div class="terminal-body">
-        <div class="mb-2">$ whoami</div>
-        <div class="mb-2 text-blue-400">Rodolfo Padilla - Molecular Biologist & Software Engineer</div>
-        <div class="mb-2">$ ls skills/</div>
-        <div class="mb-2 text-yellow-400">
-          molecular_biology/  bioinformatics/  web_development/  data_science/  
-          cell_culture/      pcr_optimization/  python/  react/  flask/
-        </div>
-        <div class="mb-2">$ cat current_status.txt</div>
-        <div class="mb-2 text-green-400">
-          📍 Location: Available for remote/hybrid opportunities<br>
-          🔬 Focus: Building tools at the intersection of biology and technology<br>
-          🎯 Goal: Accelerate scientific discovery through innovative software<br>
-          📧 Contact: rodolfo.mac3@gmail.com
-        </div>
-        <div class="mb-2">$ ./show_recent_projects.sh</div>
-        <div class="text-purple-400">
-          [1] Marker Finder - Comprehensive primer design platform<br>
-          [2] Lab Inventory System - GMP-compliant LIMS<br>
-          [3] BioQuery Assistant - AI-powered research companion<br>
-          [4] Lyme Disease Model - Mathematical epidemiology framework
-        </div>
-        <div class="mt-4">
-          <span class="typing-effect">$ Ready to collaborate on your next breakthrough...</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Featured Projects Section with Enhanced Cards -->
   <section id="projects" class="py-20 lg:py-32 relative">
@@ -484,32 +418,32 @@
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4" data-aos="fade-up">
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4 text-primary-900 dark:text-white" data-aos="fade-up">
           Research & Development Projects
         </h2>
-        <p class="text-lg text-primary-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        <p class="text-lg text-primary-700 dark:text-primary-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
           Showcasing innovative solutions that bridge molecular biology with modern software engineering
         </p>
         
         <!-- Project Filter Tabs -->
         <div class="mt-8 flex flex-wrap justify-center gap-2" data-aos="fade-up" data-aos-delay="200">
           <button @click="projectFilter = 'all'" 
-                  :class="projectFilter === 'all' ? 'bg-accent-600 text-white' : 'bg-white/10 text-primary-300'"
+                  :class="projectFilter === 'all' ? 'bg-accent-600 text-white' : 'bg-primary-200 dark:bg-white/10 text-primary-800 dark:text-primary-300'"
                   class="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105">
             All Projects
           </button>
           <button @click="projectFilter = 'bioinfo'" 
-                  :class="projectFilter === 'bioinfo' ? 'bg-accent-600 text-white' : 'bg-white/10 text-primary-300'"
+                  :class="projectFilter === 'bioinfo' ? 'bg-accent-600 text-white' : 'bg-primary-200 dark:bg-white/10 text-primary-800 dark:text-primary-300'"
                   class="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105">
             Bioinformatics
           </button>
           <button @click="projectFilter = 'lab'" 
-                  :class="projectFilter === 'lab' ? 'bg-accent-600 text-white' : 'bg-white/10 text-primary-300'"
+                  :class="projectFilter === 'lab' ? 'bg-accent-600 text-white' : 'bg-primary-200 dark:bg-white/10 text-primary-800 dark:text-primary-300'"
                   class="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105">
             Laboratory
           </button>
           <button @click="projectFilter = 'ai'" 
-                  :class="projectFilter === 'ai' ? 'bg-accent-600 text-white' : 'bg-white/10 text-primary-300'"
+                  :class="projectFilter === 'ai' ? 'bg-accent-600 text-white' : 'bg-primary-200 dark:bg-white/10 text-primary-800 dark:text-primary-300'"
                   class="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105">
             AI/ML
           </button>
@@ -551,19 +485,19 @@
               <!-- Tech Stack Tags -->
               <div class="flex items-center gap-2 mb-4 flex-wrap">
                 <template x-for="tech in project.tech" :key="tech">
-                  <span class="px-3 py-1 text-xs rounded-full bg-white/10 text-primary-200 border border-white/20" x-text="tech"></span>
+                  <span class="px-3 py-1 text-xs rounded-full bg-primary-200 dark:bg-white/10 text-primary-800 dark:text-primary-200 border border-primary-300 dark:border-white/20" x-text="tech"></span>
                 </template>
               </div>
               
-              <h3 class="font-semibold text-2xl font-display mb-3" x-text="project.title"></h3>
-              <p class="text-primary-200 mb-6 leading-relaxed" x-text="project.description"></p>
+              <h3 class="font-semibold text-2xl font-display mb-3 text-primary-900 dark:text-white" x-text="project.title"></h3>
+              <p class="text-primary-700 dark:text-primary-200 mb-6 leading-relaxed" x-text="project.description"></p>
               
               <!-- Metrics -->
               <div x-show="project.metrics" class="grid grid-cols-3 gap-4 mb-6">
                 <template x-for="metric in project.metrics" :key="metric.label">
                   <div class="text-center">
                     <div class="text-lg font-bold text-accent-400" x-text="metric.value"></div>
-                    <div class="text-xs text-primary-400" x-text="metric.label"></div>
+                    <div class="text-xs text-primary-600 dark:text-primary-400" x-text="metric.label"></div>
                   </div>
                 </template>
               </div>
@@ -587,7 +521,7 @@
               </div>
               
               <!-- Expandable Details -->
-              <div x-show="project.detailsOpen" x-transition class="mt-6 p-6 rounded-xl bg-primary-800/50 border border-white/10 text-primary-200 text-sm leading-relaxed">
+              <div x-show="project.detailsOpen" x-transition class="mt-6 p-6 rounded-xl bg-primary-100 dark:bg-primary-800/50 border border-primary-300 dark:border-white/10 text-primary-800 dark:text-primary-200 text-sm leading-relaxed">
                 <div x-html="project.details"></div>
               </div>
             </div>
@@ -597,8 +531,8 @@
       
       <!-- Call to Action for More Projects -->
       <div class="text-center mt-12 p-8 rounded-2xl bg-gradient-to-r from-accent-500/10 to-blue-500/10 border border-white/10" data-aos="fade-up">
-        <h3 class="text-2xl font-bold mb-4">Want to see more?</h3>
-        <p class="text-primary-200 mb-6">I have additional projects in development, including AI-powered diagnostic tools and laboratory automation systems.</p>
+        <h3 class="text-2xl font-bold mb-4 text-primary-900 dark:text-white">Want to see more?</h3>
+        <p class="text-primary-700 dark:text-primary-200 mb-6">I have additional projects in development, including AI-powered diagnostic tools and laboratory automation systems.</p>
         <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent-600 text-white hover:bg-accent-700 transition-all">
           <i data-lucide="message-circle" class="w-4 h-4"></i>
           Let's discuss your project needs
@@ -617,11 +551,11 @@
         <div class="w-32 h-32 rounded-3xl bg-gradient-to-br from-accent-500 to-blue-500 mx-auto mb-8 flex items-center justify-center shadow-elegant animate-float" data-aos="zoom-in">
           <i data-lucide="dna" class="w-16 h-16 text-white"></i>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-6" data-aos="fade-up">About My Research Philosophy</h2>
-        <p class="text-lg text-primary-200 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-          I am a <strong class="text-white">Molecular Biologist</strong> from the 
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-6 text-primary-900 dark:text-white" data-aos="fade-up">About My Research Philosophy</h2>
+        <p class="text-lg text-primary-700 dark:text-primary-200 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+          I am a <strong class="text-primary-900 dark:text-white">Molecular Biologist</strong> from the 
           <strong class="text-accent-400">University of Oregon</strong> with a 
-          <strong class="text-white">B.S. in Biology</strong> and minor in Chemistry. My unique background combines
+          <strong class="text-primary-900 dark:text-white">B.S. in Biology</strong> and minor in Chemistry. My unique background combines
           <strong class="text-accent-400">hands-on laboratory expertise</strong> with 
           <strong class="text-accent-400">modern software development</strong>, enabling me to build tools that truly understand researchers' needs.
         </p>
@@ -629,7 +563,7 @@
 
       <!-- Timeline / Journey -->
       <div class="mb-16">
-        <h3 class="text-2xl font-bold text-center mb-8" data-aos="fade-up">My Journey</h3>
+        <h3 class="text-2xl font-bold text-center mb-8 text-primary-900 dark:text-white" data-aos="fade-up">My Journey</h3>
         <div class="relative">
           <!-- Timeline line -->
           <div class="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-accent-500 to-blue-500"></div>
@@ -642,16 +576,16 @@
               <div class="w-4 h-4 rounded-full bg-blue-500 ring-4 ring-primary-900 relative z-10"></div>
               <div class="flex-1">
                 <h4 class="font-semibold text-xl text-blue-400">2017-2019</h4>
-                <p class="text-primary-200">New Frontier Data</p>
-                <p class="text-sm text-primary-400">ML Software Developer (Tensorflow, PyTorch, Keras)</p>
+                <p class="text-primary-700 dark:text-primary-200">New Frontier Data</p>
+                <p class="text-sm text-primary-600 dark:text-primary-400">ML Software Developer (Tensorflow, PyTorch, Keras)</p>
               </div>
             </div>
 
             <div class="flex items-center gap-8" data-aos="fade-right">
               <div class="flex-1 text-right">
                 <h4 class="font-semibold text-xl text-accent-400">2019-2020</h4>
-                <p class="text-primary-200">Retail Data LLC</p>
-                <p class="text-sm text-primary-400">Developed QC processes and data verification workflows</p>
+                <p class="text-primary-700 dark:text-primary-200">Retail Data LLC</p>
+                <p class="text-sm text-primary-600 dark:text-primary-400">Developed QC processes and data verification workflows</p>
               </div>
               <div class="w-4 h-4 rounded-full bg-accent-500 ring-4 ring-primary-900 relative z-10"></div>
               <div class="flex-1"></div>
@@ -662,16 +596,16 @@
               <div class="w-4 h-4 rounded-full bg-blue-500 ring-4 ring-primary-900 relative z-10"></div>
               <div class="flex-1">
                 <h4 class="font-semibold text-xl text-blue-400">2019-2021</h4>
-                <p class="text-primary-200">Associate of Science in Biology, Montgomery College</p>
-                <p class="text-sm text-primary-400">Focus: Biology, Chemistry</p>
+                <p class="text-primary-700 dark:text-primary-200">Associate of Science in Biology, Montgomery College</p>
+                <p class="text-sm text-primary-600 dark:text-primary-400">Focus: Biology, Chemistry</p>
               </div>
             </div>
             
             <div class="flex items-center gap-8" data-aos="fade-right">
               <div class="flex-1 text-right">
                 <h4 class="font-semibold text-xl text-accent-400">2012-2025</h4>
-                <p class="text-primary-200">B.S. Biology, University of Oregon</p>
-                <p class="text-sm text-primary-400">Focus: Molecular/Cellular/Developmental Biology, Ecology & Evolution</p>
+                <p class="text-primary-700 dark:text-primary-200">B.S. Biology, University of Oregon</p>
+                <p class="text-sm text-primary-600 dark:text-primary-400">Focus: Molecular/Cellular/Developmental Biology, Ecology & Evolution</p>
               </div>
               <div class="w-4 h-4 rounded-full bg-accent-500 ring-4 ring-primary-900 relative z-10"></div>
               <div class="flex-1"></div>
@@ -682,16 +616,16 @@
               <div class="w-4 h-4 rounded-full bg-blue-500 ring-4 ring-primary-900 relative z-10"></div>
               <div class="flex-1">
                 <h4 class="font-semibold text-xl text-blue-400">2023-2025</h4>
-                <p class="text-primary-200">Laboratory Research Experience</p>
-                <p class="text-sm text-primary-400">"CLIMUSH" project: BSL-2 certification, GMP workflows, Ecological Modeling</p>
+                <p class="text-primary-700 dark:text-primary-200">Laboratory Research Experience</p>
+                <p class="text-sm text-primary-600 dark:text-primary-400">"CLIMUSH" project: BSL-2 certification, GMP workflows, Ecological Modeling</p>
               </div>
             </div>
             
             <div class="flex items-center gap-8" data-aos="fade-right">
               <div class="flex-1 text-right">
                 <h4 class="font-semibold text-xl text-purple-400">2015-Present</h4>
-                <p class="text-primary-200">Software Development Journey</p>
-                <p class="text-sm text-primary-400">Python, React, Flask, ML/Deep Learning Web Applications</p>
+                <p class="text-primary-700 dark:text-primary-200">Software Development Journey</p>
+                <p class="text-sm text-primary-600 dark:text-primary-400">Python, React, Flask, ML/Deep Learning Web Applications</p>
               </div>
               <div class="w-4 h-4 rounded-full bg-purple-500 ring-4 ring-primary-900 relative z-10"></div>
               <div class="flex-1"></div>
@@ -707,7 +641,7 @@
             <i data-lucide="microscope" class="w-8 h-8 text-accent-400"></i>
           </div>
           <h3 class="font-semibold text-xl font-display mb-4">Scientific Rigor</h3>
-          <p class="text-primary-200 leading-relaxed">
+          <p class="text-primary-700 dark:text-primary-200 leading-relaxed">
             Every tool I build is grounded in peer-reviewed science and validated methodologies. 
             I bring the same precision from the lab bench to software development.
           </p>
@@ -718,7 +652,7 @@
             <i data-lucide="users" class="w-8 h-8 text-blue-400"></i>
           </div>
           <h3 class="font-semibold text-xl font-display mb-4">User-Centered Design</h3>
-          <p class="text-primary-200 leading-relaxed">
+          <p class="text-primary-700 dark:text-primary-200 leading-relaxed">
             Having worked in labs, I understand researchers' workflows and pain points. 
             I design intuitive interfaces that scientists actually want to use.
           </p>
@@ -729,7 +663,7 @@
             <i data-lucide="rocket" class="w-8 h-8 text-purple-400"></i>
           </div>
           <h3 class="font-semibold text-xl font-display mb-4">Innovation Focus</h3>
-          <p class="text-primary-200 leading-relaxed">
+          <p class="text-primary-700 dark:text-primary-200 leading-relaxed">
             I'm passionate about democratizing access to advanced research tools and making 
             complex scientific processes accessible to researchers worldwide.
           </p>
@@ -742,8 +676,8 @@
   <section id="skills" class="py-20 lg:py-32">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4" data-aos="fade-up">Technical Expertise</h2>
-        <p class="text-lg text-primary-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4 text-primary-900 dark:text-white" data-aos="fade-up">Technical Expertise</h2>
+        <p class="text-lg text-primary-700 dark:text-primary-300 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
           A comprehensive skill set spanning molecular biology techniques, 
           bioinformatics analysis, and modern software development
         </p>
@@ -753,53 +687,63 @@
       <div x-data="{ skillTab: 'laboratory' }">
         <!-- Enhanced Skill Tabs with Icons -->
         <div class="flex justify-center gap-4 mb-12 flex-wrap" data-aos="fade-up" data-aos-delay="200">
-          <button @click="skillTab = 'laboratory'" 
+          <button @click="skillTab = 'laboratory'; setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);" 
             :class="skillTab==='laboratory' ? 'bg-accent-600 text-white shadow-elegant scale-105' : 'bg-white/10 text-primary-300 border border-white/20'" 
             class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 flex items-center gap-2">
             <i data-lucide="flask-conical" class="w-4 h-4"></i>
             <span>Laboratory</span>
-            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">15+</span>
+            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">12</span>
           </button>
-          <button @click="skillTab = 'computational'" 
+          <button @click="skillTab = 'computational'; setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);" 
             :class="skillTab==='computational' ? 'bg-accent-600 text-white shadow-elegant scale-105' : 'bg-white/10 text-primary-300 border border-white/20'" 
             class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 flex items-center gap-2">
             <i data-lucide="brain" class="w-4 h-4"></i>
             <span>Computational</span>
-            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">12+</span>
+            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">10</span>
           </button>
-          <button @click="skillTab = 'development'" 
+          <button @click="skillTab = 'development'; setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);" 
             :class="skillTab==='development' ? 'bg-accent-600 text-white shadow-elegant scale-105' : 'bg-white/10 text-primary-300 border border-white/20'" 
             class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 flex items-center gap-2">
             <i data-lucide="code" class="w-4 h-4"></i>
             <span>Development</span>
-            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">10+</span>
+            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">7</span>
           </button>
-          <button @click="skillTab = 'professional'" 
+          <button @click="skillTab = 'professional'; setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);" 
             :class="skillTab==='professional' ? 'bg-accent-600 text-white shadow-elegant scale-105' : 'bg-white/10 text-primary-300 border border-white/20'" 
             class="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 flex items-center gap-2">
             <i data-lucide="briefcase" class="w-4 h-4"></i>
             <span>Professional</span>
-            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">10+</span>
+            <span class="bg-white/20 px-2 py-0.5 rounded-full text-xs">15</span>
           </button>
         </div>
 
-        <!-- Skills Content with Progress Bars -->
+        <!-- Skills Content -->
         <div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 lg:p-12">
           <!-- Laboratory Skills -->
           <div x-show="skillTab === 'laboratory'" class="space-y-8">
             <template x-for="category in laboratorySkills" :key="category.name">
               <div data-aos="fade-up">
                 <h3 class="text-xl font-semibold text-accent-400 mb-4" x-text="category.name"></h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <!-- Desktop Header (hidden on mobile) -->
+                  <div class="hidden md:grid md:grid-cols-12 gap-3 px-3 py-2 text-xs font-semibold text-primary-500 dark:text-primary-400 border-b border-primary-300 dark:border-white/10">
+                    <div class="md:col-span-5">Skill</div>
+                    <div class="md:col-span-3">Experience</div>
+                    <div class="md:col-span-4">Context</div>
+                  </div>
                   <template x-for="skill in category.skills" :key="skill.name">
-                    <div class="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all">
-                      <span class="text-sm font-medium" x-text="skill.name"></span>
-                      <div class="flex items-center gap-2">
-                        <div class="w-24 bg-primary-700 rounded-full h-2">
-                          <div class="bg-accent-500 h-2 rounded-full transition-all duration-500" 
-                               :style="`width: ${skill.level}%`"></div>
-                        </div>
-                        <span class="text-xs text-primary-400" x-text="`${skill.level}%`"></span>
+                    <div role="row" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center p-3 rounded-lg bg-white/5 dark:bg-white/5 hover:bg-white/10 dark:hover:bg-white/10 transition-all">
+                      <div class="md:col-span-5">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Skill: </span>
+                        <span class="text-sm font-medium text-primary-900 dark:text-white" x-text="skill.name"></span>
+                      </div>
+                      <div class="md:col-span-3">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Experience: </span>
+                        <span class="text-sm text-primary-700 dark:text-primary-300" x-text="skill.experience"></span>
+                      </div>
+                      <div class="md:col-span-4">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Context: </span>
+                        <span class="text-sm text-primary-600 dark:text-primary-400" x-text="skill.context"></span>
                       </div>
                     </div>
                   </template>
@@ -813,16 +757,26 @@
             <template x-for="category in computationalSkills" :key="category.name">
               <div data-aos="fade-up">
                 <h3 class="text-xl font-semibold text-accent-400 mb-4" x-text="category.name"></h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <!-- Desktop Header (hidden on mobile) -->
+                  <div class="hidden md:grid md:grid-cols-12 gap-3 px-3 py-2 text-xs font-semibold text-primary-500 dark:text-primary-400 border-b border-primary-300 dark:border-white/10">
+                    <div class="md:col-span-5">Skill</div>
+                    <div class="md:col-span-3">Experience</div>
+                    <div class="md:col-span-4">Context</div>
+                  </div>
                   <template x-for="skill in category.skills" :key="skill.name">
-                    <div class="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all">
-                      <span class="text-sm font-medium" x-text="skill.name"></span>
-                      <div class="flex items-center gap-2">
-                        <div class="w-24 bg-primary-700 rounded-full h-2">
-                          <div class="bg-blue-500 h-2 rounded-full transition-all duration-500" 
-                               :style="`width: ${skill.level}%`"></div>
-                        </div>
-                        <span class="text-xs text-primary-400" x-text="`${skill.level}%`"></span>
+                    <div role="row" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center p-3 rounded-lg bg-white/5 dark:bg-white/5 hover:bg-white/10 dark:hover:bg-white/10 transition-all">
+                      <div class="md:col-span-5">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Skill: </span>
+                        <span class="text-sm font-medium text-primary-900 dark:text-white" x-text="skill.name"></span>
+                      </div>
+                      <div class="md:col-span-3">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Experience: </span>
+                        <span class="text-sm text-primary-700 dark:text-primary-300" x-text="skill.experience"></span>
+                      </div>
+                      <div class="md:col-span-4">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Context: </span>
+                        <span class="text-sm text-primary-600 dark:text-primary-400" x-text="skill.context"></span>
                       </div>
                     </div>
                   </template>
@@ -836,16 +790,26 @@
             <template x-for="category in developmentSkills" :key="category.name">
               <div data-aos="fade-up">
                 <h3 class="text-xl font-semibold text-accent-400 mb-4" x-text="category.name"></h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <!-- Desktop Header (hidden on mobile) -->
+                  <div class="hidden md:grid md:grid-cols-12 gap-3 px-3 py-2 text-xs font-semibold text-primary-500 dark:text-primary-400 border-b border-primary-300 dark:border-white/10">
+                    <div class="md:col-span-5">Skill</div>
+                    <div class="md:col-span-3">Experience</div>
+                    <div class="md:col-span-4">Context</div>
+                  </div>
                   <template x-for="skill in category.skills" :key="skill.name">
-                    <div class="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all">
-                      <span class="text-sm font-medium" x-text="skill.name"></span>
-                      <div class="flex items-center gap-2">
-                        <div class="w-24 bg-primary-700 rounded-full h-2">
-                          <div class="bg-purple-500 h-2 rounded-full transition-all duration-500" 
-                               :style="`width: ${skill.level}%`"></div>
-                        </div>
-                        <span class="text-xs text-primary-400" x-text="`${skill.level}%`"></span>
+                    <div role="row" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center p-3 rounded-lg bg-white/5 dark:bg-white/5 hover:bg-white/10 dark:hover:bg-white/10 transition-all">
+                      <div class="md:col-span-5">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Skill: </span>
+                        <span class="text-sm font-medium text-primary-900 dark:text-white" x-text="skill.name"></span>
+                      </div>
+                      <div class="md:col-span-3">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Experience: </span>
+                        <span class="text-sm text-primary-700 dark:text-primary-300" x-text="skill.experience"></span>
+                      </div>
+                      <div class="md:col-span-4">
+                        <span class="block md:hidden text-xs text-primary-500 dark:text-primary-400 font-medium mb-1">Context: </span>
+                        <span class="text-sm text-primary-600 dark:text-primary-400" x-text="skill.context"></span>
                       </div>
                     </div>
                   </template>
@@ -875,13 +839,13 @@
   
 
   <!-- Enhanced Contact Section -->
-  <section id="contact" class="py-20 lg:py-32 bg-primary-900/30 relative">
-    <div class="absolute inset-0 bg-gradient-to-t from-primary-950 to-transparent"></div>
+  <section id="contact" class="py-20 lg:py-32 bg-primary-100/30 dark:bg-primary-900/30 relative">
+    <div class="absolute inset-0 bg-gradient-to-t from-primary-200 dark:from-primary-950 to-transparent"></div>
     
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
       <div class="mb-12">
-        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4" data-aos="fade-up">Let's Build Something Amazing</h2>
-        <p class="text-lg text-primary-200 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-3xl sm:text-4xl font-bold font-display mb-4 text-primary-900 dark:text-white" data-aos="fade-up">Let's Build Something Amazing</h2>
+        <p class="text-lg text-primary-700 dark:text-primary-200 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
           Whether you need a molecular biologist who can code, a developer who understands science, 
           or someone to bridge both worlds - I'm ready to contribute to your team's success.
         </p>
@@ -889,10 +853,10 @@
 
       <!-- Contact Options Grid -->
       <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="200">
-        <div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
+        <div class="p-6 rounded-2xl bg-primary-100 dark:bg-white/5 border border-primary-300 dark:border-white/10 hover:bg-primary-200 dark:hover:bg-white/10 transition-all group">
           <i data-lucide="briefcase" class="w-8 h-8 text-accent-400 mx-auto mb-4 group-hover:scale-110 transition-transform"></i>
-          <h3 class="font-semibold text-lg mb-2">Open to Opportunities</h3>
-          <p class="text-primary-200 text-sm mb-3">Research Scientist • Bioinformatics Engineer • Lab Manager</p>
+          <h3 class="font-semibold text-lg mb-2 text-primary-900 dark:text-white">Open to Opportunities</h3>
+          <p class="text-primary-700 dark:text-primary-200 text-sm mb-3">Research Scientist • Bioinformatics Engineer • Lab Manager</p>
           <div class="flex flex-wrap gap-2 justify-center">
             <span class="text-xs px-2 py-1 rounded bg-accent-500/20 text-accent-300">Full-time</span>
             <span class="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300">Remote/Hybrid</span>
@@ -900,10 +864,10 @@
           </div>
         </div>
         
-        <div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all group">
+        <div class="p-6 rounded-2xl bg-primary-100 dark:bg-white/5 border border-primary-300 dark:border-white/10 hover:bg-primary-200 dark:hover:bg-white/10 transition-all group">
           <i data-lucide="users" class="w-8 h-8 text-accent-400 mx-auto mb-4 group-hover:scale-110 transition-transform"></i>
-          <h3 class="font-semibold text-lg mb-2">Collaboration Interests</h3>
-          <p class="text-primary-200 text-sm mb-3">Open-source projects • Research partnerships • Consulting</p>
+          <h3 class="font-semibold text-lg mb-2 text-primary-900 dark:text-white">Collaboration Interests</h3>
+          <p class="text-primary-700 dark:text-primary-200 text-sm mb-3">Open-source projects • Research partnerships • Consulting</p>
           <div class="flex flex-wrap gap-2 justify-center">
             <span class="text-xs px-2 py-1 rounded bg-green-500/20 text-green-300">Biotech</span>
             <span class="text-xs px-2 py-1 rounded bg-orange-500/20 text-orange-300">Healthcare</span>
@@ -920,12 +884,12 @@
           <span>Send Me an Email</span>
         </a>
         <a :href="resumeUrl" 
-           class="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 hover:scale-105 transition-all font-semibold">
+           class="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-200 dark:bg-white/10 border border-primary-300 dark:border-white/20 hover:bg-primary-300 dark:hover:bg-white/20 hover:scale-105 transition-all font-semibold text-primary-900 dark:text-white">
           <i data-lucide="download" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i> 
           <span>Download Resume</span>
         </a>
         <a href="https://www.linkedin.com/in/rodolfo-padilla-a0937b381/" target="_blank" rel="noopener"
-           class="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 border border-white/20 hover:bg-white/20 hover:scale-105 transition-all font-semibold">
+           class="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-primary-200 dark:bg-white/10 border border-primary-300 dark:border-white/20 hover:bg-primary-300 dark:hover:bg-white/20 hover:scale-105 transition-all font-semibold text-primary-900 dark:text-white">
           <i data-lucide="linkedin" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i> 
           <span>LinkedIn</span>
         </a>
@@ -937,10 +901,10 @@
           <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
           <p class="text-green-300 font-medium">Currently Available</p>
         </div>
-        <p class="text-primary-200 text-sm">
+        <p class="text-primary-700 dark:text-primary-200 text-sm">
           Immediate availability for full-time positions and project collaborations
         </p>
-        <div class="mt-4 text-xs text-primary-400">
+        <div class="mt-4 text-xs text-primary-600 dark:text-primary-400">
           <p>Time Zone: PST/PDT (UTC-8/UTC-7)</p>
           <p>Response Time: Within 24 hours</p>
         </div>
@@ -949,7 +913,7 @@
   </section>
 
   <!-- Enhanced Footer -->
-  <footer class="py-12 border-t border-white/10 bg-primary-950/50">
+  <footer class="py-12 border-t border-primary-300 dark:border-white/10 bg-primary-100/50 dark:bg-primary-950/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-3 gap-8 mb-8">
         <!-- Brand -->
@@ -958,37 +922,37 @@
             <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-500 to-blue-500 flex items-center justify-center">
               <i data-lucide="dna" class="w-4 h-4 text-white"></i>
             </div>
-            <span class="font-semibold">Rodolfo Padilla</span>
+            <span class="font-semibold text-primary-900 dark:text-white">Rodolfo Padilla</span>
           </div>
-          <p class="text-sm text-primary-400">
+          <p class="text-sm text-primary-600 dark:text-primary-400">
             Bridging molecular biology with software innovation to accelerate scientific discovery.
           </p>
         </div>
         
         <!-- Quick Links -->
         <div>
-          <h4 class="font-semibold mb-4">Quick Links</h4>
+          <h4 class="font-semibold mb-4 text-primary-900 dark:text-white">Quick Links</h4>
           <div class="space-y-2">
-            <a href="#projects" class="block text-sm text-primary-400 hover:text-accent-400 transition-colors">Projects</a>
-            <a href="#about" class="block text-sm text-primary-400 hover:text-accent-400 transition-colors">About</a>
-            <a href="#skills" class="block text-sm text-primary-400 hover:text-accent-400 transition-colors">Skills</a>
-            <a href="#contact" class="block text-sm text-primary-400 hover:text-accent-400 transition-colors">Contact</a>
+            <a href="#projects" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Projects</a>
+            <a href="#about" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">About</a>
+            <a href="#skills" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Skills</a>
+            <a href="#contact" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Contact</a>
           </div>
         </div>
         
         <!-- Contact Info -->
         <div>
-          <h4 class="font-semibold mb-4">Get In Touch</h4>
+          <h4 class="font-semibold mb-4 text-primary-900 dark:text-white">Get In Touch</h4>
           <div class="space-y-2">
-            <a href="mailto:rodolfo.mac3@gmail.com" class="flex items-center gap-2 text-sm text-primary-400 hover:text-accent-400 transition-colors">
+            <a href="mailto:rodolfo.mac3@gmail.com" class="flex items-center gap-2 text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">
               <i data-lucide="mail" class="w-4 h-4"></i>
               rodolfo.mac3@gmail.com
             </a>
-            <a href="https://github.com/rodolfomac3" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-primary-400 hover:text-accent-400 transition-colors">
+            <a href="https://github.com/rodolfomac3" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">
               <i data-lucide="github" class="w-4 h-4"></i>
               GitHub
             </a>
-            <a href="https://www.linkedin.com/in/rodolfo-padilla-a0937b381/" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-primary-400 hover:text-accent-400 transition-colors">
+            <a href="https://www.linkedin.com/in/rodolfo-padilla-a0937b381/" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">
               <i data-lucide="linkedin" class="w-4 h-4"></i>
               LinkedIn
             </a>
@@ -996,13 +960,13 @@
         </div>
       </div>
       
-      <div class="border-t border-white/10 pt-8">
+      <div class="border-t border-primary-300 dark:border-white/10 pt-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="text-primary-400 text-sm">
+          <div class="text-primary-600 dark:text-primary-400 text-sm">
             © <span x-text="year"></span> Rodolfo Padilla. All rights reserved.
           </div>
           
-          <div class="flex items-center gap-6 text-sm text-primary-400">
+          <div class="flex items-center gap-6 text-sm text-primary-600 dark:text-primary-400">
             <span>Built with modern web technologies</span>
             <button @click="scrollToTop()" class="hover:text-accent-400 transition-colors flex items-center gap-1">
               <span>Back to top</span>
@@ -1019,11 +983,10 @@
     function portfolioApp() {
       return {
         // State
-        darkMode: false,
+        darkMode: true, // Default to dark mode since site is designed dark
         mobileOpen: false,
         scrolled: false,
         scrollProgress: 0,
-        showTerminal: false,
         projectFilter: 'all',
         statusText: 'Available for opportunities',
         tagline: 'Bridging Laboratory Science with Computational Innovation',
@@ -1186,70 +1149,61 @@
           {
             name: 'Molecular Biology Techniques',
             skills: [
-              { name: 'PCR/qPCR Optimization', level: 95 },
-              { name: 'Cell Culture (BSL-2)', level: 90 },
-              { name: 'Protein Purification', level: 85 },
-              { name: 'CRISPR-Cas9', level: 75 },
-              { name: 'Western Blot', level: 90 },
-              { name: 'Immunofluorescence', level: 85 }
+              { name: 'PCR/qPCR Optimization', experience: '4+ yrs', context: 'Academic research & coursework', evidenceUrl: '' },
+              { name: 'Cell Culture (BSL-2)', experience: '3+ yrs', context: 'Research lab', evidenceUrl: '' },
+              { name: 'Western Blot', experience: '3 yrs', context: 'Core lab technique', evidenceUrl: '' },
+              { name: 'Immunofluorescence', experience: '2 yrs', context: 'Microscopy workflows', evidenceUrl: '' },
+              { name: 'CRISPR-Cas9', experience: '1–2 yrs', context: 'Coursework/project exposure', evidenceUrl: '' },
+              { name: 'Protein Purification', experience: '2 yrs', context: 'Research protocols', evidenceUrl: '' }
             ]
           },
           {
             name: 'Laboratory Operations',
             skills: [
-              { name: 'GMP Compliance', level: 90 },
-              { name: 'Aseptic Technique', level: 95 },
-              { name: 'Equipment Maintenance', level: 85 },
-              { name: 'Quality Control', level: 90 },
-              { name: 'Safety Protocols', level: 95 },
-              { name: 'Documentation', level: 90 }
+              { name: 'Aseptic Technique', experience: '3+ yrs', context: 'Clean bench, BSL-2', evidenceUrl: '' },
+              { name: 'GMP Familiarity', experience: '2 yrs', context: 'Documentation/SOP mindset', evidenceUrl: '' },
+              { name: 'Equipment Maintenance', experience: '2 yrs', context: 'Centrifuges, incubators, PCR', evidenceUrl: '' },
+              { name: 'Quality Control & Documentation', experience: '3 yrs', context: 'SOPs, logs, traceability', evidenceUrl: '' },
+              { name: 'Safety Protocols', experience: '3+ yrs', context: 'Biosafety practices', evidenceUrl: '' },
+              { name: 'GMP Compliance', experience: '2 yrs', context: 'Regulatory awareness', evidenceUrl: '' }
             ]
           }
         ],
         
         computationalSkills: [
           {
-            name: 'Bioinformatics & Analysis',
+            name: 'Data Science & Analysis',
             skills: [
-              { name: 'Python (BioPython)', level: 90 },
-              { name: 'R (Bioconductor)', level: 85 },
-              { name: 'BLAST/NCBI Tools', level: 90 },
-              { name: 'Sequence Analysis', level: 85 },
-              { name: 'Statistical Modeling', level: 80 },
-              { name: 'Data Visualization', level: 90 }
+              { name: 'Python (pandas, matplotlib, scikit-learn)', experience: '2+ yrs', context: 'EDA, modeling, viz', evidenceUrl: '' },
+              { name: 'R (tidyverse, ggplot2)', experience: '2 yrs', context: 'Biostats & visualization', evidenceUrl: '' },
+              { name: 'SQL', experience: '2 yrs', context: 'Data wrangling & joins', evidenceUrl: '' },
+              { name: 'Geospatial (QGIS, geopandas)', experience: '1–2 yrs', context: 'Ecology/iNaturalist analyses', evidenceUrl: '' },
+              { name: 'ML Fundamentals', experience: '1–2 yrs', context: 'Classification/Regression projects', evidenceUrl: '' }
             ]
           },
           {
-            name: 'Scientific Computing',
+            name: 'Bioinformatics & Scientific Computing',
             skills: [
-              { name: 'NumPy/Pandas', level: 90 },
-              { name: 'Machine Learning', level: 75 },
-              { name: 'ODE Modeling', level: 85 },
-              { name: 'Image Analysis', level: 80 },
-              { name: 'Git Version Control', level: 90 }
+              { name: 'BLAST/NCBI Tools', experience: '2+ yrs', context: 'Sequence analysis workflows', evidenceUrl: '' },
+              { name: 'NumPy/Pandas', experience: '2+ yrs', context: 'Data manipulation & analysis', evidenceUrl: '' },
+              { name: 'ODE Modeling', experience: '1–2 yrs', context: 'Epidemiological models', evidenceUrl: '' },
+              { name: 'Image Analysis', experience: '1–2 yrs', context: 'Microscopy & ImageJ', evidenceUrl: '' },
+              { name: 'Git Version Control', experience: '2+ yrs', context: 'Project management', evidenceUrl: '' }
             ]
           }
         ],
         
         developmentSkills: [
           {
-            name: 'Frontend Development',
+            name: 'Full-Stack & DevOps',
             skills: [
-              { name: 'React.js', level: 85 },
-              { name: 'JavaScript/TypeScript', level: 85 },
-              { name: 'HTML/CSS', level: 95 },
-              { name: 'Tailwind CSS', level: 90 },
-              { name: 'Responsive Design', level: 90 }
-            ]
-          },
-          {
-            name: 'Backend & DevOps',
-            skills: [
-              { name: 'Python Flask', level: 90 },
-              { name: 'RESTful APIs', level: 85 },
-              { name: 'SQL/NoSQL', level: 80 },
-              { name: 'Docker', level: 75 },
-              { name: 'CI/CD', level: 75 }
+              { name: 'React/Next.js', experience: '2 yrs', context: 'Portfolio & apps', evidenceUrl: '' },
+              { name: 'Flask/FastAPI', experience: '1–2 yrs', context: 'APIs & small services', evidenceUrl: '' },
+              { name: 'Docker', experience: '1–2 yrs', context: 'Dev environments & deploys', evidenceUrl: '' },
+              { name: 'CI/CD (GitHub Actions)', experience: '1 yr', context: 'Automated tests/builds', evidenceUrl: '' },
+              { name: 'JavaScript/TypeScript', experience: '2 yrs', context: 'Frontend development', evidenceUrl: '' },
+              { name: 'HTML/CSS/Tailwind', experience: '2+ yrs', context: 'Responsive design', evidenceUrl: '' },
+              { name: 'SQL/NoSQL', experience: '1–2 yrs', context: 'Database design & queries', evidenceUrl: '' }
             ]
           }
         ],
@@ -1277,9 +1231,9 @@
         
         // Initialization
         init() {
-          // Dark mode
+          // Dark mode - default to true (dark) if no preference set
           const pref = localStorage.getItem('portfolio_dark_mode');
-          this.darkMode = pref ? pref === '1' : false;
+          this.darkMode = pref !== null ? pref === '1' : true;
           this.applyDark();
           
           // Initialize icons
@@ -1405,7 +1359,11 @@
         },
         
         applyDark() {
-          document.documentElement.classList.toggle('dark', this.darkMode);
+          if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
         },
         
         // Scroll to top
