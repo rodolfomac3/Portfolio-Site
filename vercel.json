@@ -65,13 +65,16 @@
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
     { "source": "/health", "destination": "https://markerfinder.onrender.com/health" },
     { "source": "/research-story", "destination": "/research-story.html" },
-    { "source": "/lyme-model", "destination": "/lyme-model.html" }
+    { "source": "/lyme-model", "destination": "/lyme-model.html" },
+    { "source": "/dracula", "destination": "https://dracula-viewer.onrender.com/" },
+    { "source": "/dracula/(.*)", "destination": "https://dracula-viewer.onrender.com/$1" }
   ],
   
   "redirects": [
     { "source": "/lab", "destination": "https://lab-inventory-6l9o.onrender.com/", "permanent": false },
     { "source": "/assistant", "destination": "https://bioquery-frontend.onrender.com/", "permanent": false },
     { "source": "/resume", "destination": "/RodolfoPadilla_.pdf", "permanent": false },
-    { "source": "/cv", "destination": "/RodolfoPadilla_.pdf", "permanent": false }
+    { "source": "/cv", "destination": "/RodolfoPadilla_.pdf", "permanent": false },
+    { "source": "/dracula", "destination": "https://dracula-viewer.onrender.com/", "permanent": false }
   ]
 }
