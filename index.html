@@ -1037,6 +1037,27 @@
             icon: 'test-tube'
           },
           {
+  id: 'patient-journey-dashboard',
+  title: 'Patient Journey Dashboard',
+  category: 'bioinfo',
+  description: 'Interactive healthcare analytics platform visualizing patient care pathways, cost analysis, and utilization patterns across 1,000+ synthetic patient records. Features real-time filtering, interactive heatmaps, and actionable insights for healthcare operations.',
+  tech: ['R', 'Shiny', 'Plotly', 'Healthcare Data', 'Synthea(FHIR)'],
+  video: '/patient_dashboard_video.mp4', 
+  link: 'https://rpadilla3.shinyapps.io/patient-journey-dashboard/',
+  linkText: 'Launch Dashboard',
+  github: null, 
+  status: 'live',
+  metrics: [
+    { label: 'Patients', value: '1,171' },
+    { label: 'Encounters', value: '170K+' },
+    { label: 'Visualizations', value: '8+' }
+  ],
+  details: '<p class="mb-3"><strong class="text-white">Challenge:</strong> Healthcare providers need clear insights into care pathways and cost drivers to optimize operations and improve patient outcomes.</p><p class="mb-3"><strong class="text-white">Solution:</strong> Built an interactive Shiny dashboard with multiple analytical views: population overview, cost pathway analysis, utilization heatmaps, and patient-level explorability. Processes 170K+ healthcare encounters to identify high-cost pathways and super-utilizer segments.</p><p class="mb-3"><strong class="text-white">Key Features:</strong></p><ul class="list-disc list-inside mb-3 space-y-1"><li>Cost Analysis: Bar charts showing emergency visits cost 10x more than primary care</li><li>Utilization Heatmap: Interactive age × condition matrix identifying high-utilizer segments</li><li>Real-time Filtering: Dynamic filters by age group, gender, and date range</li><li>Patient Explorer: Searchable directory with 1,100+ patient records</li></ul><p><strong class="text-white">Impact:</strong> Demonstrates ability to transform complex healthcare data (Synthea FHIR format) into actionable business intelligence. Showcases both technical skills (R, Shiny, data visualization) and domain knowledge (healthcare operations, cost analysis).</p>',
+  detailsOpen: false,
+  gradient: 'from-cyan-900/30 to-blue-900/30',
+  icon: 'activity'
+},
+          {
             id: 'lab-inventory',
             title: 'Laboratory Inventory Management',
             category: 'lab',
