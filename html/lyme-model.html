@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modeling the Impact of Host Density on Tick-Borne Lyme Disease Risk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times', 'Times New Roman', serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .author-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .back-button:hover {
+            background: white;
+            transform: translateY(-1px);
+        }
+
+        .content {
+            padding: 50px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            font-size: 1.4rem;
+            color: #34495e;
+            margin: 30px 0 15px 0;
+        }
+
+        .abstract {
+            background: #ecf0f1;
+            padding: 30px;
+            border-left: 5px solid #3498db;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .equation-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 25px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+
+        .equation-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-family: 'Times', serif;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 6px;
+            margin: 0 0 25px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block .comment { color: #6a9955; }
+        .code-block .function { color: #dcdcaa; }
+        .code-block .string { color: #ce9178; }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .operator { color: #d4d4d4; }
+        .code-block .variable { color: #9cdcfe; }
+
+        .code-header {
+            background: #34495e;
+            color: white;
+            padding: 12px 20px;
+            margin: 25px 0 0 0;
+            border-radius: 6px 6px 0 0;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .figure {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .figure-caption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .result-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+
+        .result-item h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .methodology-list {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .methodology-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .methodology-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .methodology-list li:last-child {
+            border-bottom: none;
+        }
+
+        .methodology-list li::before {
+            content: "▸ ";
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border: 1px solid #dee2e6;
+        }
+
+        .parameter-table th,
+        .parameter-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .parameter-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .parameter-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 40px;
+            margin: 40px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .download-button {
+            display: inline-block;
+            background: white;
+            color: #2980b9;
+            padding: 15px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .metric {
+            background: white;
+            border: 1px solid #dee2e6;
+            padding: 25px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .content { padding: 30px 20px; }
+            .header h1 { font-size: 2rem; }
+            .results-grid { grid-template-columns: 1fr; }
+            .parameter-table { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">← Back to Portfolio</a>
+    
+    <div class="container">
+        <!-- Header -->
+        <section class="header">
+            <h1>Modeling the Impact of White-Footed Mouse Density on Tick-Borne Lyme Disease Risk</h1>
+            <div class="subtitle">Unraveling <em>Ixodes scapularis</em> Infection Dynamics in Montgomery County, Maryland</div>
+            <div class="author-info">
+                <strong>Rodolfo Padilla</strong><br>
+                University of Oregon<br>
+                <em>Ecological Modeling & Disease Dynamics Research</em>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <section class="content">
+            <!-- Abstract -->
+            <div class="abstract">
+                <strong>Abstract:</strong> This study investigates the relationship between white-footed mouse (<em>Peromyscus leucopus</em>) population density and Lyme disease transmission risk through a comprehensive stage-structured mathematical model. Using a system of ordinary differential equations coupled with real Montgomery County temperature data (2020-2024), we model tick population dynamics across larval, nymphal, and adult life stages, incorporating temperature-dependent mortality and molting rates. Our model reveals that mouse density above 15 mice/acre creates exponential increases in human infection risk, with cumulative cases reaching 12,400 over two years at peak densities. The research provides quantitative evidence supporting targeted ecological management strategies for Lyme disease prevention.
+            </div>
+
+            <!-- Problem Statement -->
+            <div class="section">
+                <h2>Research Problem & Significance</h2>
+                
+                <div class="impact-metrics">
+                    <div class="metric">
+                        <div class="metric-number">7,000</div>
+                        <div class="metric-label">2024 Montgomery County Lyme Cases</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">300</div>
+                        <div class="metric-label">2007 Montgomery County Lyme Cases</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">2,233%</div>
+                        <div class="metric-label">Increase Over 17 Years</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">22,500</div>
+                        <div class="metric-label">Acres Protected Forest</div>
+                    </div>
+                </div>
+
+                <p>The dramatic 23-fold increase in Lyme disease cases in Montgomery County correlates with documented increases in white-footed mouse populations across the Mid-Atlantic region. This research addresses the critical gap in understanding how host density quantitatively affects vector-borne disease transmission dynamics at the landscape scale.</p>
+            </div>
+
+            <!-- Mathematical Model -->
+            <div class="section">
+                <h2>Mathematical Framework</h2>
+                
+                <h3>Mouse Population Dynamics (SIS Model)</h3>
+                <div class="equation-block">
+                    <div class="equation-title">Susceptible and Infected Mouse Compartments:</div>
+                    dS/dt = μM₀ - βₕ(Nᵢ + Aᵢ)S - μS<br><br>
+                    dI/dt = βₕ(Nᵢ + Aᵢ)S - μI<br><br>
+                    Where M₀ = S(t) + I(t) represents total mouse density
+                </div>
+
+                <h3>Stage-Structured Tick Model</h3>
+                <div class="equation-block">
+                    <div class="equation-title">Larval Stage Dynamics:</div>
+                    dLᵤ/dt = γ - αβ(I/M₀)Lᵤ - μₗLᵤ<br><br>
+                    dLᵢ/dt = αβ(I/M₀)Lᵤ - μₗLᵢ
+                </div>
+
+                <div class="equation-block">
+                    <div class="equation-title">Nymphal Stage Dynamics:</div>
+                    dNᵤ/dt = σₗLᵤ - (μₙ + σₙ)Nᵤ<br><br>
+                    dNᵢ/dt = σₗLᵢ - (μₙ + σₙ)Nᵢ
+                </div>
+
+                <div class="equation-block">
+                    <div class="equation-title">Adult Stage Dynamics:</div>
+                    dAᵤ/dt = σₙ,ₐNᵤ - ρₐ(I/M₀)Aᵤ - μₐAᵤ<br><br>
+                    dAᵢ/dt = σₙ,ₐNᵢ + ρₐ(I/M₀)Aᵤ - μₐAᵢ
+                </div>
+
+                <div class="equation-block">
+                    <div class="equation-title">Human Infection Rate:</div>
+                    dHᵢ/dt = λψ(Nᵢ + Aᵢ)
+                </div>
+
+                <h3>Temperature Dependence</h3>
+                <div class="equation-block">
+                    <div class="equation-title">Gaussian Temperature Modifier:</div>
+                    X(T) = X₀ exp[-(T - T_{opt,X})²/(2σ²ₓ)]<br><br>
+                    Applied to parameters: α, μₗ, σₗ based on Montgomery County climate data
+                </div>
+            </div>
+
+            <!-- Parameter Table -->
+            <div class="section">
+                <h2>Model Parameters</h2>
+                <table class="parameter-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                            <th>Value Range</th>
+                            <th>Temperature Dependent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>μ</td>
+                            <td>Mouse birth/death rate</td>
+                            <td>0.02 week⁻¹</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>M₀</td>
+                            <td>Total mouse density</td>
+                            <td>2-40 mice/acre</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>βₕ</td>
+                            <td>Tick-to-mouse infection rate</td>
+                            <td>0.001</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>α</td>
+                            <td>Tick attachment rate</td>
+                            <td>0.05 (baseline)</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>γ</td>
+                            <td>Larval production rate</td>
+                            <td>20 larvae/week</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>μₗ, μₙ, μₐ</td>
+                            <td>Stage-specific mortality rates</td>
+                            <td>0.08, 0.06, 0.04 week⁻¹</td>
+                            <td>Yes (larvae)</td>
+                        </tr>
+                        <tr>
+                            <td>σₗ, σₙ</td>
+                            <td>Molting rates</td>
+                            <td>0.05, 0.03 week⁻¹</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>λ</td>
+                            <td>Human-tick contact rate</td>
+                            <td>0.001</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>ψ</td>
+                            <td>Transmission probability per bite</td>
+                            <td>0.3</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Implementation -->
+            <div class="section">
+                <h2>Computational Implementation</h2>
+                
+                <div class="code-header">R Implementation - Temperature-Dependent Parameters</div>
+                <div class="code-block"><span class="comment"># Temperature modifier function</span>
+<span class="function">temp_modifier</span> <span class="operator">&lt;-</span> <span class="keyword">function</span>(<span class="variable">base_value</span>, <span class="variable">temp</span>, <span class="variable">optimal_temp</span> = <span class="string">20</span>, <span class="variable">sigma</span> = <span class="string">10</span>) {
+  <span class="variable">temp_effect</span> <span class="operator">&lt;-</span> <span class="function">exp</span>(-(temp - optimal_temp)^<span class="string">2</span> / (<span class="string">2</span> * sigma^<span class="string">2</span>))
+  <span class="keyword">return</span>(base_value * temp_effect)
+}
+
+<span class="comment"># Apply temperature effects to mortality and molting rates</span>
+<span class="function">apply_temperature_effects</span> <span class="operator">&lt;-</span> <span class="keyword">function</span>(<span class="variable">params</span>, <span class="variable">temperature</span>) {
+  params$<span class="variable">mu_L</span> <span class="operator">&lt;-</span> <span class="function">temp_modifier</span>(params$mu_L_base, temperature, <span class="string">25</span>, <span class="string">12</span>)
+  params$<span class="variable">alpha</span> <span class="operator">&lt;-</span> <span class="function">temp_modifier</span>(params$alpha_base, temperature, <span class="string">22</span>, <span class="string">8</span>)
+  params$<span class="variable">sigma_L</span> <span class="operator">&lt;-</span> <span class="function">temp_modifier</span>(params$sigma_L_base, temperature, <span class="string">20</span>, <span class="string">10</span>)
+  <span class="keyword">return</span>(params)
+}</div>
+
+                <div class="code-header">Model Integration with deSolve</div>
+                <div class="code-block"><span class="comment"># ODE system for tick-mouse-human dynamics</span>
+<span class="function">tick_mouse_model</span> <span class="operator">&lt;-</span> <span class="keyword">function</span>(<span class="variable">t</span>, <span class="variable">state</span>, <span class="variable">parameters</span>) {
+  <span class="function">with</span>(<span class="function">as.list</span>(<span class="function">c</span>(state, parameters)), {
+    <span class="comment"># Current temperature for this time step</span>
+    <span class="variable">temp</span> <span class="operator">&lt;-</span> <span class="function">get_temperature</span>(t, temp_data)
+    <span class="variable">params</span> <span class="operator">&lt;-</span> <span class="function">apply_temperature_effects</span>(parameters, temp)
+    
+    <span class="comment"># Mouse dynamics</span>
+    <span class="variable">dS</span> <span class="operator">&lt;-</span> mu * M0 - beta_H * (N_I + A_I) * S - mu * S
+    <span class="variable">dI</span> <span class="operator">&lt;-</span> beta_H * (N_I + A_I) * S - mu * I
+    
+    <span class="comment"># Tick larval dynamics</span>
+    <span class="variable">dL_U</span> <span class="operator">&lt;-</span> gamma - params$alpha * beta * (I/M0) * L_U - params$mu_L * L_U
+    <span class="variable">dL_I</span> <span class="operator">&lt;-</span> params$alpha * beta * (I/M0) * L_U - params$mu_L * L_I
+    
+    <span class="comment"># Tick nymphal dynamics</span>
+    <span class="variable">dN_U</span> <span class="operator">&lt;-</span> params$sigma_L * L_U - (mu_N + sigma_N) * N_U
+    <span class="variable">dN_I</span> <span class="operator">&lt;-</span> params$sigma_L * L_I - (mu_N + sigma_N) * N_I
+    
+    <span class="comment"># Tick adult dynamics</span>
+    <span class="variable">dA_U</span> <span class="operator">&lt;-</span> sigma_N_a * N_U - rho_A * (I/M0) * A_U - mu_A * A_U
+    <span class="variable">dA_I</span> <span class="operator">&lt;-</span> sigma_N_a * N_I + rho_A * (I/M0) * A_U - mu_A * A_I
+    
+    <span class="comment"># Human infections</span>
+    <span class="variable">dH_i</span> <span class="operator">&lt;-</span> lambda * psi * (N_I + A_I)
+    
+    <span class="keyword">return</span>(<span class="function">list</span>(<span class="function">c</span>(dS, dI, dL_U, dL_I, dN_U, dN_I, dA_U, dA_I, dH_i)))
+  })
+}</div>
+
+                <div class="code-header">Parameter Sweep Analysis</div>
+                <div class="code-block"><span class="comment"># Sweep mouse density to assess impact on human infections</span>
+<span class="function">density_sweep</span> <span class="operator">&lt;-</span> <span class="keyword">function</span>(<span class="variable">density_range</span> = <span class="function">seq</span>(<span class="string">2</span>, <span class="string">40</span>, by = <span class="string">2</span>)) {
+  <span class="variable">results</span> <span class="operator">&lt;-</span> <span class="function">data.frame</span>(
+    <span class="variable">mouse_density</span> = density_range,
+    <span class="variable">cumulative_infections</span> = <span class="function">numeric</span>(<span class="function">length</span>(density_range)),
+    <span class="variable">peak_infected_nymphs</span> = <span class="function">numeric</span>(<span class="function">length</span>(density_range))
+  )
+  
+  <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="function">seq_along</span>(density_range)) {
+    <span class="comment"># Set mouse density</span>
+    parameters$<span class="variable">M0</span> <span class="operator">&lt;-</span> density_range[i]
+    
+    <span class="comment"># Run simulation</span>
+    <span class="variable">solution</span> <span class="operator">&lt;-</span> <span class="function">ode</span>(
+      y = initial_state,
+      times = time_seq,
+      func = tick_mouse_model,
+      parms = parameters,
+      method = <span class="string">"lsoda"</span>
+    )
+    
+    <span class="comment"># Extract key metrics</span>
+    results$cumulative_infections[i] <span class="operator">&lt;-</span> <span class="function">tail</span>(solution[, <span class="string">"H_i"</span>], <span class="string">1</span>) * <span class="string">22500</span> <span class="comment"># Scale to county</span>
+    results$peak_infected_nymphs[i] <span class="operator">&lt;-</span> <span class="function">max</span>(solution[, <span class="string">"N_I"</span>])
+  }
+  
+  <span class="keyword">return</span>(results)
+}</div>
+            </div>
+
+            <!-- Results -->
+            <div class="section">
+                <h2>Key Findings</h2>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h4>Critical Density Threshold</h4>
+                        <p>Analysis reveals a critical threshold at approximately 15 mice/acre, above which cumulative human infections increase exponentially rather than linearly.</p>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h4>Seasonal Dynamics</h4>
+                        <p>Peak infected tick populations occur during weeks 30-50 (mid-summer through early fall), corresponding to maximum human exposure risk periods.</p>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h4>Temperature Sensitivity</h4>
+                        <p>2°C temperature increase extends active transmission season by 3-4 weeks, amplifying annual infection cycles by 25-30%.</p>
+                    </div>
+                    
+                    <div class="result-item">
+                        <h4>Management Implications</h4>
+                        <p>Reducing mouse density to 10-12 mice/acre through habitat management could decrease human infection risk by 40-60%.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Methodology -->
+            <div class="section">
+                <h2>Research Methodology</h2>
+                
+                <div class="methodology-list">
+                    <ul>
+                        <li><strong>Data Collection:</strong> Montgomery County temperature data averaged from 2020-2024 weather records</li>
+                        <li><strong>Model Framework:</strong> Stage-structured ODE system implemented in R using deSolve package</li>
+                        <li><strong>Parameter Estimation:</strong> Literature-based values with sensitivity analysis across realistic ranges</li>
+                        <li><strong>Temporal Resolution:</strong> Weekly time steps over 104-week (2-year) simulation periods</li>
+                        <li><strong>Spatial Scale:</strong> Results scaled to Montgomery County's 22,500 acres of accessible forest</li>
+                        <li><strong>Validation:</strong> Model predictions compared against actual Lyme disease case trends</li>
+                        <li><strong>Sensitivity Analysis:</strong> Parameter sweeps across mouse density ranges (2-40 mice/acre)</li>
+                        <li><strong>Statistical Methods:</strong> Gaussian temperature modifiers with optimal temperature parameters</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Download Section -->
+            <div class="download-section">
+                <h3>Complete Research Documentation</h3>
+                <p>Access the full mathematical model, parameter justification, sensitivity analyses, and detailed methodology in the comprehensive research proposal.</p>
+                <a href="/Proposal.pdf" class="download-button" target="_blank">
+                    📄 Download Full Research Proposal (PDF)
+                </a>
+            </div>
+
+            <!-- Technical Impact -->
+            <div class="section">
+                <h2>Research Impact & Applications</h2>
+                
+                <h3>Public Health Policy</h3>
+                <p>This quantitative framework provides evidence-based support for targeted ecological interventions in Lyme disease prevention. The identification of critical mouse density thresholds enables cost-effective resource allocation for habitat management programs.</p>
+                
+                <h3>Ecological Management</h3>
+                <p>The model's temperature dependence components allow for climate-adaptive management strategies, accounting for projected warming trends in disease vector dynamics.</p>
+                
+                <h3>Methodological Contributions</h3>
+                <p>The integration of real-time temperature data with stage-structured population models demonstrates a replicable framework for vector-borne disease modeling across different geographic regions and pathogen systems.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
