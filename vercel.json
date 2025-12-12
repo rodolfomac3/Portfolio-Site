@@ -31,7 +31,7 @@
       ]
     },
     {
-      "source": "/(.*).mp4",
+      "source": "/videos/(.*).mp4",
       "headers": [
         {
           "key": "Cache-Control",
@@ -64,8 +64,8 @@
     { "source": "/api/(.*)", "destination": "https://markerfinder.onrender.com/api/$1" },
     { "source": "/static/(.*)", "destination": "https://markerfinder.onrender.com/static/$1" },
     { "source": "/health", "destination": "https://markerfinder.onrender.com/health" },
-    { "source": "/research-story", "destination": "/research-story.html" },
-    { "source": "/lyme-model", "destination": "/lyme-model.html" },
+    { "source": "/research-story", "destination": "/html/research-story.html" },
+    { "source": "/lyme-model", "destination": "/html/lyme-model.html" },
     { "source": "/dracula", "destination": "https://dracula-viewer.onrender.com/" },
     { "source": "/dracula/(.*)", "destination": "https://dracula-viewer.onrender.com/$1" }
   ],
