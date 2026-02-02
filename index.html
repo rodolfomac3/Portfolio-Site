@@ -388,7 +388,7 @@
       <!-- Enhanced Stats with counters -->
       <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="300">
         <div class="text-center group cursor-pointer" @click="showStat('certifications')">
-          <div class="text-3xl font-bold text-accent-400 group-hover:scale-110 transition-transform">3</div>
+          <div class="text-3xl font-bold text-accent-400 group-hover:scale-110 transition-transform">5</div>
           <div class="text-sm text-primary-700 dark:text-primary-300">Security Certifications</div>
         </div>
         <div class="text-center group cursor-pointer" @click="showStat('education')">
@@ -720,7 +720,7 @@
         </p>
         
         <!-- Certifications Section - horizontal scroll (active certs visible, CompTIA scroll right) -->
-        <div class="mt-12 mb-8" data-aos="fade-up" data-aos-delay="150">
+        <div id="certifications" class="mt-12 mb-8 scroll-mt-24" data-aos="fade-up" data-aos-delay="150">
           <h3 class="text-2xl font-bold text-center mb-6 text-primary-900 dark:text-white">Certifications</h3>
           <div class="relative">
             <div x-ref="certsContainer" class="flex gap-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory scrollbar-hide" style="scrollbar-width: none; -ms-overflow-style: none;">
@@ -1059,8 +1059,9 @@
         <div>
           <h4 class="font-semibold mb-4 text-primary-900 dark:text-white">Quick Links</h4>
           <div class="space-y-2">
-            <a href="#projects" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Projects</a>
             <a href="#about" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">About</a>
+            <a href="#projects" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Projects</a>
+            <a href="#certifications" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Certifications</a>
             <a href="#skills" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Skills</a>
             <a href="#contact" class="block text-sm text-primary-600 dark:text-primary-400 hover:text-accent-400 transition-colors">Contact</a>
           </div>
@@ -1134,9 +1135,10 @@
         
         // Navigation items
         navItems: [
-          { name: 'Skills', href: '#skills' },
           { name: 'About', href: '#about' },
           { name: 'Projects', href: '#projects' },
+          { name: 'Certifications', href: '#certifications' },
+          { name: 'Skills', href: '#skills' },
           { name: 'Contact', href: '#contact' }
         ],
         
@@ -1447,6 +1449,14 @@
             issuer: 'Credly / Google',
             credentialId: 'd91edead-3a27-4000-8c9d-313feb9ffe03',
             url: 'https://www.credly.com/badges/d91edead-3a27-4000-8c9d-313feb9ffe03',
+            date: '2026',
+            status: 'completed'
+          },
+          {
+            name: 'Cisco Certified Ethical Hacker (CEH)',
+            issuer: 'Credly / Cisco',
+            credentialId: '7eabeaa7-40eb-4e33-99a9-2b87708e188c',
+            url: 'https://www.credly.com/badges/7eabeaa7-40eb-4e33-99a9-2b87708e188c',
             date: '2026',
             status: 'completed'
           },
